@@ -45,11 +45,11 @@
             <div class="space-y-3 text-sm text-slate-600 mb-6 max-h-[60vh] overflow-y-auto pr-1">
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
-                    <p><strong>Jadwal Kelas 11:</strong> Jadwal pelajaran di tab <span class="font-semibold text-indigo-600">Jadwal Pelajaran</span> sudah otomatis diset sesuai dokumen resmi MA Zumrotul Wildan untuk Kelas 11.</p>
+                    <p><strong>Tampilan Diperbaiki:</strong> Kolom mata pelajaran kini diperluas agar nama mapel terlihat utuh di layar HP.</p>
                 </div>
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
-                    <p><strong>Bisa Diedit:</strong> Kamu tetap bisa mengubah atau menyesuaikan teks jam dan mata pelajarannya jika sewaktu-waktu ada perubahan.</p>
+                    <p><strong>Bisa Diedit:</strong> Kamu tetap bisa mengubah teks jam dan mata pelajarannya secara fleksibel.</p>
                 </div>
             </div>
             <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer">
@@ -251,32 +251,21 @@
                         <h2 class="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center">
                             <i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jadwal Pelajaran Kelas 11 (MA Zumrotul Wildan)
                         </h2>
-                        <p class="text-xs text-slate-500">Sesuai dokumen resmi tahun ajaran 2026/2027. Bisa diedit secara fleksibel.</p>
+                        <p class="text-xs text-slate-500">Sesuai dokumen resmi tahun ajaran 2026/2027. Tampilan dioptimalkan untuk HP.</p>
                     </div>
                     <div class="flex space-x-2">
                         <button onclick="resetDefaultLessons()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-xl transition cursor-pointer">
-                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset Default
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset
                         </button>
                         <button onclick="saveLessonsData()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-md shadow-indigo-100 cursor-pointer">
-                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Perubahan
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan
                         </button>
                     </div>
                 </div>
 
-                <!-- Tabel Jadwal Pelajaran Editable (Senin - Ahad) -->
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-700">
-                                <th class="p-3 rounded-l-xl w-28">Hari</th>
-                                <th class="p-3 w-36">Waktu / Jam Ke</th>
-                                <th class="p-3 rounded-r-xl">Mata Pelajaran (Kelas 11)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lessonsTableBody" class="divide-y divide-slate-100 text-slate-600">
-                            <!-- Data dimuat lewat JavaScript -->
-                        </tbody>
-                    </table>
+                <!-- Daftar Kartu Jadwal Pelajaran (Responsive Mobile-Friendly) -->
+                <div id="lessonsListContainer" class="space-y-4 max-h-[65vh] overflow-y-auto pr-1">
+                    <!-- Dimuat lewat JavaScript -->
                 </div>
             </div>
         </div>
@@ -373,40 +362,48 @@
             { day: "Ahad", time: "12:30 - 13:30 (Jam 10-11)", subject: "Pendalaman / Kelas Khusus" }
         ];
 
-        // Render Tabel Jadwal Pelajaran
+        // Render Daftar Jadwal Pelajaran (Card Layout Responsive)
         function renderLessonsTable() {
             let savedData = localStorage.getItem('jarak_sekolah_lessons_f_kelas11');
             let lessons = savedData ? JSON.parse(savedData) : defaultLessons;
-            let tbody = document.getElementById('lessonsTableBody');
-            tbody.innerHTML = '';
+            let container = document.getElementById('lessonsListContainer');
+            container.innerHTML = '';
 
-            let dayCounts = {};
-            lessons.forEach(item => {
-                dayCounts[item.day] = (dayCounts[item.day] || 0) + 1;
-            });
-
-            let renderedDays = {};
+            let currentDayGroup = '';
+            let dayCard = null;
+            let dayContentDiv = null;
 
             lessons.forEach((item, index) => {
-                let tr = document.createElement('tr');
-                if (index % 2 === 1) tr.className = "bg-slate-50/50";
+                if (item.day !== currentDayGroup) {
+                    currentDayGroup = item.day;
+                    dayCard = document.createElement('div');
+                    dayCard.className = "bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3";
+                    
+                    let dayHeader = document.createElement('h3');
+                    dayHeader.className = "text-sm font-extrabold text-indigo-700 uppercase tracking-wider flex items-center border-b border-slate-200 pb-2";
+                    dayHeader.innerHTML = `<i class="fa-solid fa-calendar-day mr-2"></i> ${currentDayGroup}`;
+                    dayCard.appendChild(dayHeader);
 
-                let dayCellHtml = '';
-                if (!renderedDays[item.day]) {
-                    renderedDays[item.day] = true;
-                    dayCellHtml = `<td class="p-3 font-bold text-slate-800 align-middle border-r border-slate-100" rowspan="${dayCounts[item.day]}">${item.day}</td>`;
+                    dayContentDiv = document.createElement('div');
+                    dayContentDiv.className = "space-y-2.5";
+                    dayCard.appendChild(dayContentDiv);
+                    
+                    container.appendChild(dayCard);
                 }
 
-                tr.innerHTML = `
-                    ${dayCellHtml}
-                    <td class="p-3">
-                        <input type="text" value="${item.time}" data-index="${index}" class="time-input w-full border border-slate-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-indigo-600 bg-white">
-                    </td>
-                    <td class="p-3">
-                        <input type="text" value="${item.subject}" data-index="${index}" class="subject-input w-full border border-slate-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-indigo-600 bg-white font-medium text-slate-700">
-                    </td>
+                let rowDiv = document.createElement('div');
+                rowDiv.className = "bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-2";
+                rowDiv.innerHTML = `
+                    <div class="flex items-center space-x-2">
+                        <span class="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md"><i class="fa-regular fa-clock mr-1"></i> Jam:</span>
+                        <input type="text" value="${item.time}" data-index="${index}" class="time-input flex-1 border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-semibold text-slate-700 bg-slate-50 focus:outline-none focus:border-indigo-600">
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md"><i class="fa-solid fa-book mr-1"></i> Mapel:</span>
+                        <input type="text" value="${item.subject}" data-index="${index}" class="subject-input flex-1 border border-indigo-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900 bg-white focus:outline-none focus:border-indigo-600 shadow-sm">
+                    </div>
                 `;
-                tbody.appendChild(tr);
+                dayContentDiv.appendChild(rowDiv);
             });
         }
 
@@ -467,7 +464,7 @@
         }
 
         // Inisialisasi Peta
-        let map = L.map('map').setView([-6.5888, 110.6681], 13); // Koordinat sekitar Jepara
+        let map = L.map('map').setView([-6.5888, 110.6681], 13);
 
         let streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
         let satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles &copy; Esri' });
