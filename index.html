@@ -35,72 +35,75 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen pb-20">
 
-    <!-- TUTORIAL MODAL (STEP BY STEP LENGKAP) -->
-    <div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl transform transition-all scale-100 flex flex-col max-h-[90vh]">
-            <div class="flex items-center space-x-3 mb-4 shrink-0">
-                <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-2xl">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-slate-900">PANDUAN APLIKASI</h3>
-                    <p class="text-xs text-slate-500">JARAK KESEKOLAH F</p>
-                </div>
+    <!-- TUTORIAL MODAL (DIPERBAIKI AGAR TIDAK TERTUTUP MENU BAWAH) -->
+<div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-4 md:p-6 shadow-2xl transform transition-all scale-100 flex flex-col max-h-[80vh]">
+        
+        <!-- Header Modal -->
+        <div class="flex items-center space-x-3 mb-3 shrink-0">
+            <div class="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-xl">
+                <i class="fa-solid fa-graduation-cap"></i>
             </div>
-
-            <!-- Daftar Langkah-langkah (Bisa di-scroll jika panjang) -->
-            <div class="space-y-3.5 text-xs text-slate-600 mb-6 overflow-y-auto pr-2 flex-1">
-                <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
-                    <div>
-                        <strong class="text-slate-900 block mb-0.5">Tentukan Lokasi Rumah & Sekolah</strong>
-                        Gunakan tombol <em>"Gunakan GPS"</em> untuk mendeteksi posisi rumah otomatis, atau ketik nama daerah di kolom pencarian rumah. Setelah itu, klik titik lokasi <strong>Sekolah </strong> langsung di peta.
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div class="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
-                    <div>
-                        <strong class="text-slate-900 block mb-0.5">Pilih Moda Transportasi & Hitung Rute</strong>
-                        Pilih moda perjalanan (Jalan Kaki, Motor, atau Mobil) serta sesuaikan kecepatan jika diperlukan. Tekan tombol <strong class="text-indigo-600">"Hitung Rute"</strong> untuk melihat jarak tempuh riil jalan raya beserta estimasi waktunya.
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</div>
-                    <div>
-                        <strong class="text-slate-900 block mb-0.5">Cek Jadwal & Pasang Alarm</strong>
-                        Pindah ke tab <strong>"Jadwal & Alarm"</strong> di bagian bawah. Masukkan jam masuk sekolah dan durasi persiapanmu (mandi, sarapan, dll), lalu klik <strong class="text-amber-600">"Aktifkan Alarm Pengingat"</strong> agar aplikasi mengingatkanmu tepat waktu.
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div class="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</div>
-                    <div>
-                        <strong class="text-slate-900 block mb-0.5">Melihat & Mengedit Jadwal Pelajaran</strong>
-                        Pindah ke tab <strong>"Jadwal Pelajaran"</strong> untuk melihat daftar mapel Kelas 11 (Senin - Ahad). Tampilan sudah diperluas agar nama mapel terlihat utuh. Kamu bisa langsung mengedit teks jam atau mapelnya secara fleksibel lalu klik <strong>Simpan</strong>.
-                    </div>
-                </div>
-
-                <!-- LANGKAH 5: CARA INSTALL APLIKASI -->
-                <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <div class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">5</div>
-                    <div>
-                        <strong class="text-slate-900 block mb-0.5">Install Aplikasi ke Layar HP</strong>
-                        Buka menu titik tiga (<i class="fa-solid fa-ellipsis-vertical text-purple-600"></i>) di pojok kanan atas browser Google Chrome HP, lalu pilih <strong>"Install Aplikasi"</strong> atau <strong>"Tambahkan ke Layar Utama"</strong> agar aplikasi terpasang permanen.
-                    </div>
-                </div>
-
-                <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-900">
-                    <i class="fa-solid fa-circle-info mr-1 text-indigo-600"></i> <strong>Catatan:</strong> Jika sewaktu-waktu kamu lupa cara penggunaannya, cukup klik tombol tanda tanya (<i class="fa-solid fa-circle-question"></i>) di pojok kanan atas halaman utama kapan saja!
-                </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900">PANDUAN APLIKASI</h3>
+                <p class="text-[11px] text-slate-500">JARAK KESEKOLAH F</p>
             </div>
-
-            <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer shrink-0">
-                Saya Mengerti & Mulai Aplikasi <i class="fa-solid fa-arrow-right ml-2"></i>
-            </button>
         </div>
+
+        <!-- Daftar Langkah-langkah (Bisa di-scroll ke bawah) -->
+        <div class="space-y-3 text-xs text-slate-600 mb-4 overflow-y-auto pr-2 flex-1">
+            <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
+                <div>
+                    <strong class="text-slate-900 block mb-0.5">Tentukan Lokasi Rumah & Sekolah</strong>
+                    Gunakan tombol <em>"Gunakan GPS"</em> untuk mendeteksi posisi rumah otomatis, atau ketik nama daerah di kolom pencarian rumah. Setelah itu, klik titik lokasi <strong>Sekolah </strong> langsung di peta.
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
+                <div>
+                    <strong class="text-slate-900 block mb-0.5">Pilih Moda Transportasi & Hitung Rute</strong>
+                    Pilih moda perjalanan (Jalan Kaki, Motor, atau Mobil) serta sesuaikan kecepatan jika diperlukan. Tekan tombol <strong class="text-indigo-600">"Hitung Rute"</strong> untuk melihat jarak tempuh riil jalan raya beserta estimasi waktunya.
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</div>
+                <div>
+                    <strong class="text-slate-900 block mb-0.5">Cek Jadwal & Pasang Alarm</strong>
+                    Pindah ke tab <strong>"Jadwal & Alarm"</strong> di bagian bawah. Masukkan jam masuk sekolah dan durasi persiapanmu (mandi, sarapan, dll), lalu klik <strong class="text-amber-600">"Aktifkan Alarm Pengingat"</strong> agar aplikasi mengingatkanmu tepat waktu.
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</div>
+                <div>
+                    <strong class="text-slate-900 block mb-0.5">Melihat & Mengedit Jadwal Pelajaran</strong>
+                    Pindah ke tab <strong>"Jadwal Pelajaran"</strong> untuk melihat daftar mapel Kelas 11 (Senin - Ahad). Tampilan sudah diperluas agar nama mapel terlihat utuh. Kamu bisa langsung mengedit teks jam atau mapelnya secara fleksibel lalu klik <strong>Simpan</strong>.
+                </div>
+            </div>
+
+            <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">5</div>
+                <div>
+                    <strong class="text-slate-900 block mb-0.5">Install Aplikasi ke Layar HP</strong>
+                    Buka menu titik tiga (<i class="fa-solid fa-ellipsis-vertical text-purple-600"></i>) di pojok kanan atas browser Google Chrome HP, lalu pilih <strong>"Install Aplikasi"</strong> atau <strong>"Tambahkan ke Layar Utama"</strong> agar aplikasi terpasang permanen.
+                </div>
+            </div>
+
+            <div class="p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-900">
+                <i class="fa-solid fa-circle-info mr-1 text-indigo-600"></i> <strong>Catatan:</strong> Jika sewaktu-waktu kamu lupa cara penggunaannya, cukup klik tombol tanda tanya (<i class="fa-solid fa-circle-question"></i>) di pojok kanan atas halaman utama kapan saja!
+            </div>
+        </div>
+
+        <!-- Tombol "Saya Mengerti" yang sekarang aman dan bisa diklik -->
+        <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer shrink-0">
+            Saya Mengerti & Mulai Aplikasi <i class="fa-solid fa-arrow-right ml-2"></i>
+        </button>
     </div>
+</div>
+
 
     <!-- HEADER -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
