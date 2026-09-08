@@ -16,7 +16,6 @@
             min-height: 400px;
             z-index: 10;
         }
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -39,26 +38,22 @@
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold text-slate-900">Selamat Datang di JARAK KESEKOLAH F</h3>
-                    <p class="text-xs text-slate-500">Panduan Cepat Penggunaan Aplikasi</p>
+                    <h3 class="text-xl font-bold text-slate-900">JARAK KESEKOLAH F</h3>
+                    <p class="text-xs text-slate-500">Panduan Fitur Baru (GPS & Jadwal Alarm)</p>
                 </div>
             </div>
-            <div class="space-y-3 text-sm text-slate-600 mb-6">
+            <div class="space-y-3 text-sm text-slate-600 mb-6 max-h-[60vh] overflow-y-auto pr-1">
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
-                    <p><strong>Tentukan Rumah:</strong> Klik sekali pada peta untuk menandai titik lokasi rumah Anda (Marker Biru).</p>
+                    <p><strong>Cari Rumah:</strong> Gunakan tombol "Deteksi GPS" untuk lokasi otomatis, atau ketik nama jalan pada kolom pencarian & klik "Cari". Bisa juga klik langsung di peta.</p>
                 </div>
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
-                    <p><strong>Tentukan Sekolah:</strong> Klik kedua kalinya pada peta untuk menandai titik lokasi sekolah (Marker Merah).</p>
+                    <p><strong>Tentukan Sekolah:</strong> Klik pada titik lokasi sekolah di peta (Marker Merah).</p>
                 </div>
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</div>
-                    <p><strong>Pilih Moda & Kecepatan:</strong> Pilih alat transportasi (Jalan kaki, Motor, Mobil) dan sesuaikan kecepatan manual jika diperlukan.</p>
-                </div>
-                <div class="flex items-start space-x-3">
-                    <div class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</div>
-                    <p><strong>Hitung & Navigasi:</strong> Tekan "Hitung Perjalanan" untuk melihat jarak/waktu, atau buka langsung di Google Maps!</p>
+                    <p><strong>Jadwal & Alarm:</strong> Atur jam masuk sekolah, waktu persiapan (mandi/sarapan), aplikasi akan menghitung jam berangkat ideal dan membunyikan alarm pengingat!</p>
                 </div>
             </div>
             <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer">
@@ -76,10 +71,10 @@
                 </div>
                 <div>
                     <h1 class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight">JARAK KESEKOLAH F</h1>
-                    <p class="text-xs text-slate-500 hidden sm:block">Aplikasi Pengukur Jarak & Estimasi Waktu Tempuh Tugas Sekolah</p>
+                    <p class="text-xs text-slate-500 hidden sm:block">GPS, Kalkulator Jarak & Alarm Jadwal Sekolah</p>
                 </div>
             </div>
-            <button onclick="openTutorial()" class="text-slate-500 hover:text-indigo-600 text-sm font-medium flex items-center space-x-1 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition">
+            <button onclick="openTutorial()" class="text-slate-500 hover:text-indigo-600 text-sm font-medium flex items-center space-x-1 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition cursor-pointer">
                 <i class="fa-solid fa-circle-question"></i>
                 <span class="hidden sm:inline">Bantuan</span>
             </button>
@@ -89,28 +84,44 @@
     <!-- MAIN CONTENT CONTAINER -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
         
-        <!-- SIDEBAR KONTROL & HASIL (Kolom 1 & 2 di Desktop) -->
+        <!-- SIDEBAR KONTROL & HASIL -->
         <div class="lg:col-span-1 flex flex-col space-y-4">
             
-            <!-- Panel Titik Lokasi -->
+            <!-- Panel Pencarian & Titik Lokasi Rumah/Sekolah -->
             <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
                 <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
-                    <i class="fa-solid fa-map-pin text-indigo-600 mr-2"></i> Titik Koordinat
+                    <i class="fa-solid fa-map-pin text-indigo-600 mr-2"></i> Titik Lokasi
                 </h2>
-                <div class="space-y-3 text-xs">
-                    <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between">
+                
+                <!-- Pencarian Rumah Manual & GPS -->
+                <div class="space-y-3 mb-4">
+                    <label class="block text-xs font-semibold text-slate-700">Cari / Deteksi Lokasi Rumah:</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="searchHomeInput" placeholder="Cth: Monas, Jakarta..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-600">
+                        <button onclick="searchHomeLocation()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer" title="Cari Lokasi">
+                            <i class="fa-solid fa-search"></i>
+                        </button>
+                    </div>
+                    <button onclick="detectGPS()" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center space-x-2 cursor-pointer">
+                        <i class="fa-solid fa-location-crosshairs text-blue-600"></i>
+                        <span>Gunakan GPS (Lokasi Saya)</span>
+                    </button>
+                </div>
+
+                <div class="space-y-2 text-xs border-t border-slate-100 pt-3">
+                    <div class="p-2.5 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between">
                         <div class="flex items-center space-x-2">
-                            <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
+                            <div class="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>
                             <span class="font-semibold text-blue-900">Rumah:</span>
                         </div>
-                        <span id="homeCoord" class="text-slate-600 italic">Belum dipilih (Klik Peta)</span>
+                        <span id="homeCoord" class="text-slate-600 italic">Belum dipilih</span>
                     </div>
-                    <div class="p-3 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-between">
+                    <div class="p-2.5 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-between">
                         <div class="flex items-center space-x-2">
-                            <div class="w-3 h-3 bg-rose-600 rounded-full"></div>
+                            <div class="w-2.5 h-2.5 bg-rose-600 rounded-full"></div>
                             <span class="font-semibold text-rose-900">Sekolah:</span>
                         </div>
-                        <span id="schoolCoord" class="text-slate-600 italic">Belum dipilih (Klik Peta)</span>
+                        <span id="schoolCoord" class="text-slate-600 italic">Belum dipilih</span>
                     </div>
                 </div>
             </div>
@@ -121,30 +132,47 @@
                     <i class="fa-solid fa-gauge-high text-indigo-600 mr-2"></i> Moda & Kecepatan
                 </h2>
                 
-                <!-- Pilihan Moda Transportasi -->
-                <label class="block text-xs font-semibold text-slate-700 mb-2">Pilih Kendaraan:</label>
-                <div class="grid grid-cols-3 gap-2 mb-4">
-                    <button type="button" onclick="setMode('walk', 4, this)" class="mode-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-person-walking text-lg mb-1"></i>
-                        <span class="text-xs">Jalan Kaki</span>
+                <div class="grid grid-cols-3 gap-2 mb-3">
+                    <button type="button" onclick="setMode('walk', 4, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-person-walking text-base mb-1"></i>
+                        <span class="text-[11px]">Jalan Kaki</span>
                     </button>
-                    <button type="button" onclick="setMode('motor', 35, this)" class="mode-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-motorcycle text-lg mb-1"></i>
-                        <span class="text-xs">Motor</span>
+                    <button type="button" onclick="setMode('motor', 35, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-motorcycle text-base mb-1"></i>
+                        <span class="text-[11px]">Motor</span>
                     </button>
-                    <button type="button" onclick="setMode('car', 30, this)" class="mode-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-car text-lg mb-1"></i>
-                        <span class="text-xs">Mobil</span>
+                    <button type="button" onclick="setMode('car', 30, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-car text-base mb-1"></i>
+                        <span class="text-[11px]">Mobil</span>
                     </button>
                 </div>
 
-                <!-- Input Kecepatan Manual -->
-                <div class="mb-2">
+                <div>
                     <div class="flex justify-between items-center mb-1">
-                        <label for="speedInput" class="text-xs font-semibold text-slate-700">Kecepatan Manual (km/jam):</label>
+                        <label for="speedInput" class="text-xs font-semibold text-slate-700">Kecepatan (km/jam):</label>
                         <span id="speedValue" class="text-xs font-bold text-indigo-600">4 km/j</span>
                     </div>
                     <input type="range" id="speedInput" min="1" max="100" value="4" oninput="updateSpeedVal(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Panel Pengaturan Jadwal & Alarm -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
+                    <i class="fa-solid fa-clock text-indigo-600 mr-2"></i> Jadwal & Alarm Sekolah
+                </h2>
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Jam Masuk Sekolah:</label>
+                        <input type="time" id="schoolTimeInput" value="07:00" class="w-full border border-slate-300 rounded-xl px-3 py-2 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">Waktu Persiapan (Mandi, Sarapan, dll):</label>
+                        <div class="flex items-center space-x-2">
+                            <input type="number" id="prepTimeInput" value="30" min="0" max="180" class="w-20 border border-slate-300 rounded-xl px-3 py-2 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600">
+                            <span class="text-slate-500 font-medium">Menit</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -152,7 +180,7 @@
             <div class="grid grid-cols-2 gap-3">
                 <button onclick="calculateRoute()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-md shadow-indigo-100 flex items-center justify-center space-x-2 text-sm cursor-pointer">
                     <i class="fa-solid fa-calculator"></i>
-                    <span>Hitung</span>
+                    <span>Hitung & Jadwal</span>
                 </button>
                 <button onclick="resetAll()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-4 rounded-xl transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
                     <i class="fa-solid fa-rotate-right"></i>
@@ -160,23 +188,43 @@
                 </button>
             </div>
 
-            <!-- Panel Hasil -->
-            <div id="resultPanel" class="bg-indigo-900 text-white rounded-2xl p-5 shadow-lg hidden">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-3 flex items-center">
-                    <i class="fa-solid fa-chart-line mr-2"></i> Hasil Perhitungan
-                </h2>
-                <div class="grid grid-cols-2 gap-4 mb-4">
-                    <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
-                        <span class="text-[10px] text-indigo-200 block uppercase">Jarak Garis Lurus</span>
-                        <span id="resDistance" class="text-lg font-extrabold">-</span>
-                    </div>
-                    <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
-                        <span class="text-[10px] text-indigo-200 block uppercase">Estimasi Waktu</span>
-                        <span id="resTime" class="text-lg font-extrabold">-</span>
+            <!-- Panel Hasil & Jadwal Alarm -->
+            <div id="resultPanel" class="bg-indigo-900 text-white rounded-2xl p-5 shadow-lg hidden space-y-4">
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-2 flex items-center">
+                        <i class="fa-solid fa-chart-line mr-2"></i> Hasil Perhitungan Perjalanan
+                    </h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
+                            <span class="text-[10px] text-indigo-200 block uppercase">Jarak</span>
+                            <span id="resDistance" class="text-base font-extrabold">-</span>
+                        </div>
+                        <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
+                            <span class="text-[10px] text-indigo-200 block uppercase">Estimasi Waktu</span>
+                            <span id="resTime" class="text-base font-extrabold">-</span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Info Jadwal & Alarm -->
+                <div class="bg-white/10 p-3.5 rounded-xl border border-white/10 space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-indigo-200">Waktu Berangkat Ideal:</span>
+                        <span id="resDepartureTime" class="font-bold text-amber-300 text-sm">-</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs border-t border-white/10 pt-2">
+                        <span class="text-indigo-200">Waktu Mulai Persiapan:</span>
+                        <span id="resPrepStartTime" class="font-bold text-emerald-300 text-sm">-</span>
+                    </div>
+                    <button onclick="setAlarmTrigger()" id="alarmBtn" class="w-full mt-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-2 px-3 rounded-lg transition text-xs flex items-center justify-center space-x-2 cursor-pointer">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Aktifkan Alarm Pengingat Berangkat</span>
+                    </button>
+                    <p id="alarmStatus" class="text-[10px] text-center text-indigo-300 italic hidden">Alarm Aktif! Pengingat siap berbunyi.</p>
+                </div>
+
                 <!-- Tombol Google Maps -->
-                <a id="gmapsBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-900/30 flex items-center justify-center space-x-2 text-sm">
+                <a id="gmapsBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 text-sm">
                     <i class="fa-solid fa-map-location-dot"></i>
                     <span>Buka di Google Maps</span>
                 </a>
@@ -184,10 +232,10 @@
 
         </div>
 
-        <!-- PETA INTERAKTIF (Kolom 2 / Lebar di Desktop) -->
+        <!-- PETA INTERAKTIF -->
         <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col relative h-[500px] lg:h-auto">
             <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center justify-between text-xs font-medium text-slate-600">
-                <span id="mapInstruction"><i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Klik pada peta untuk memilih titik <strong>Rumah</strong></span>
+                <span id="mapInstruction"><i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Tentukan Rumah via GPS/Pencarian, lalu klik titik <strong>Sekolah</strong> di peta</span>
                 <span class="text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">Leaflet Maps</span>
             </div>
             <div id="map" class="flex-1 w-full"></div>
@@ -203,77 +251,122 @@
     <!-- Leaflet JS Script -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Inisialisasi Peta (Default pusat di Indonesia/Jakarta atau koordinat umum)
+        // Inisialisasi Peta
         let map = L.map('map').setView([-6.200000, 106.816666], 13);
 
-        // Layer Peta Jalan (Street View)
         let streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // Layer Peta Satelit (Satellite View)
         let satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             maxZoom: 19,
-            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-eGIS, and the GIS User Community'
+            attribution: 'Tiles &copy; Esri'
         });
 
-        // Kontrol Layer Peta
-        let baseMaps = {
-            "Peta Jalan": streetLayer,
-            "Peta Satelit": satelliteLayer
-        };
-        L.control.layers(baseMaps).addTo(map);
+        L.control.layers({"Peta Jalan": streetLayer, "Peta Satelit": satelliteLayer}).addTo(map);
 
-        // Variabel Status Aplikasi
         let homeMarker = null;
         let schoolMarker = null;
         let routeLine = null;
-        let currentStep = 'home'; // 'home' atau 'school'
-        let currentSpeed = 4; // km/jam default jalan kaki
+        let currentSpeed = 4;
+        let alarmInterval = null;
+        let targetAlarmDate = null;
 
-        // Event Klik Peta
+        // Klik Peta untuk menentukan Sekolah (jika Rumah sudah ada) atau Rumah (jika belum)
         map.on('click', function(e) {
             let lat = e.latlng.lat;
             let lng = e.latlng.lng;
 
-            if (currentStep === 'home') {
-                if (homeMarker) map.removeLayer(homeMarker);
-                
-                // Custom Ikon Biru untuk Rumah
-                let homeIcon = L.divIcon({
-                    className: 'custom-icon',
-                    html: '<div style="background-color: #2563eb; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"><i class="fa-solid fa-house text-xs"></i></div>',
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16]
-                });
-
-                homeMarker = L.marker([lat, lng], {icon: homeIcon}).addTo(map);
-                document.getElementById('homeCoord').innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                
-                currentStep = 'school';
-                document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-rose-600 mr-1"></i> Sekarang klik pada peta untuk memilih titik <strong>Sekolah</strong>';
-            
-            } else if (currentStep === 'school') {
-                if (schoolMarker) map.removeLayer(schoolMarker);
-
-                // Custom Ikon Merah untuk Sekolah
-                let schoolIcon = L.divIcon({
-                    className: 'custom-icon',
-                    html: '<div style="background-color: #e11d48; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"><i class="fa-solid fa-school text-xs"></i></div>',
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 16]
-                });
-
-                schoolMarker = L.marker([lat, lng], {icon: schoolIcon}).addTo(map);
-                document.getElementById('schoolCoord').innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                
-                currentStep = 'done';
-                document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Titik selesai! Silakan klik tombol <strong>Hitung</strong>.';
+            if (!homeMarker) {
+                setHomePoint(lat, lng, "Titik Peta Manual");
+            } else if (!schoolMarker) {
+                setSchoolPoint(lat, lng);
+            } else {
+                // Jika sudah ada keduanya, klik ulang mengeset ulang sekolah
+                setSchoolPoint(lat, lng);
             }
         });
 
-        // Fungsi Pilih Moda Transportasi
+        function setHomePoint(lat, lng, label = "") {
+            if (homeMarker) map.removeLayer(homeMarker);
+            
+            let homeIcon = L.divIcon({
+                className: 'custom-icon',
+                html: '<div style="background-color: #2563eb; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"><i class="fa-solid fa-house text-xs"></i></div>',
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+
+            homeMarker = L.marker([lat, lng], {icon: homeIcon}).addTo(map);
+            document.getElementById('homeCoord').innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)} ${label ? '('+label+')' : ''}`;
+            map.setView([lat, lng], 14);
+
+            document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-rose-600 mr-1"></i> Rumah diset! Sekarang klik peta untuk titik <strong>Sekolah</strong>';
+        }
+
+        function setSchoolPoint(lat, lng) {
+            if (schoolMarker) map.removeLayer(schoolMarker);
+
+            let schoolIcon = L.divIcon({
+                className: 'custom-icon',
+                html: '<div style="background-color: #e11d48; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"><i class="fa-solid fa-school text-xs"></i></div>',
+                iconSize: [32, 32],
+                iconAnchor: [16, 16]
+            });
+
+            schoolMarker = L.marker([lat, lng], {icon: schoolIcon}).addTo(map);
+            document.getElementById('schoolCoord').innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+            
+            document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Titik lengkap! Silakan tekan tombol <strong>Hitung & Jadwal</strong>.';
+        }
+
+        // Fitur GPS Otomatis
+        function detectGPS() {
+            if (!navigator.geolocation) {
+                alert('Browser Anda tidak mendukung fitur Geolocation GPS.');
+                return;
+            }
+            alert('Mengakses lokasi GPS Anda...');
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    let lat = position.coords.latitude;
+                    let lng = position.coords.longitude;
+                    setHomePoint(lat, lng, "GPS");
+                },
+                function(error) {
+                    alert('Gagal mendeteksi GPS: ' + error.message + '. Pastikan izin lokasi diaktifkan.');
+                },
+                { enableHighAccuracy: true }
+            );
+        }
+
+        // Fitur Pencarian Alamat Rumah Manual (Geocoding Nominatim)
+        function searchHomeLocation() {
+            let query = document.getElementById('searchHomeInput').value.trim();
+            if (!query) {
+                alert('Masukkan nama tempat atau alamat yang ingin dicari terlebih dahulu!');
+                return;
+            }
+
+            let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        let lat = parseFloat(data[0].lat);
+                        let lng = parseFloat(data[0].lon);
+                        setHomePoint(lat, lng, data[0].display_name.substring(0, 20) + '...');
+                    } else {
+                        alert('Lokasi tidak ditemukan. Coba kata kunci lain yang lebih spesifik.');
+                    }
+                })
+                .catch(err => {
+                    alert('Terjadi kesalahan koneksi saat mencari lokasi.');
+                });
+        }
+
+        // Moda Transportasi & Kecepatan
         function setMode(mode, defaultSpeed, btnElement) {
             document.querySelectorAll('.mode-btn').forEach(btn => {
                 btn.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-700');
@@ -287,52 +380,61 @@
             document.getElementById('speedValue').innerText = defaultSpeed + ' km/j';
         }
 
-        // Update Slider Kecepatan Manual
         function updateSpeedVal(val) {
             currentSpeed = parseFloat(val);
             document.getElementById('speedValue').innerText = val + ' km/j';
         }
 
-        // Hitung Jarak & Waktu
+        // Kalkulasi Jarak, Waktu & Jadwal Alarm
+        let calculatedTravelMinutes = 0;
+
         function calculateRoute() {
             if (!homeMarker || !schoolMarker) {
-                alert('Harap tentukan titik Rumah dan Sekolah terlebih dahulu dengan mengklik pada peta!');
+                alert('Harap tentukan titik Rumah dan Sekolah terlebih dahulu!');
                 return;
             }
 
             let homeLatLng = homeMarker.getLatLng();
             let schoolLatLng = schoolMarker.getLatLng();
 
-            // Hitung jarak garis lurus menggunakan fungsi bawaan Leaflet (dalam meter)
             let distanceMeters = homeLatLng.distanceTo(schoolLatLng);
             let distanceKm = distanceMeters / 1000;
-
-            // Format jarak
             let distText = distanceKm < 1 ? `${Math.round(distanceMeters)} Meter` : `${distanceKm.toFixed(2)} KM`;
 
-            // Hitung Waktu (Jam = Jarak / Kecepatan)
             let hours = distanceKm / currentSpeed;
-            let totalMinutes = Math.round(hours * 60);
-            let timeText = '';
-            
-            if (totalMinutes < 60) {
-                timeText = `${totalMinutes} Menit`;
-            } else {
-                let h = Math.floor(totalMinutes / 60);
-                let m = totalMinutes % 60;
-                timeText = `${h} Jam ${m} Menit`;
-            }
+            calculatedTravelMinutes = Math.round(hours * 60);
+            if (calculatedTravelMinutes < 1) calculatedTravelMinutes = 1; // Minimal 1 menit
 
-            // Tampilkan ke Panel Hasil
+            let timeText = calculatedTravelMinutes < 60 ? `${calculatedTravelMinutes} Menit` : `${Math.floor(calculatedTravelMinutes/60)} Jam ${calculatedTravelMinutes%60} Menit`;
+
             document.getElementById('resDistance').innerText = distText;
             document.getElementById('resTime').innerText = timeText;
+
+            // Hitung Jam Berangkat & Persiapan
+            let schoolTimeStr = document.getElementById('schoolTimeInput').value; // cth "07:00"
+            let prepMinutes = parseInt(document.getElementById('prepTimeInput').value) || 0;
+
+            if (schoolTimeStr) {
+                let [sHour, sMin] = schoolTimeStr.split(':').map(Number);
+                let schoolDate = new Date();
+                schoolDate.setHours(sHour, sMin, 0, 0);
+
+                // Waktu Berangkat = Jam Sekolah - Waktu Perjalanan
+                let departureDate = new Date(schoolDate.getTime() - calculatedTravelMinutes * 60000);
+                // Waktu Mulai Persiapan = Waktu Berangkat - Waktu Persiapan
+                let prepStartDate = new Date(departureDate.getTime() - prepMinutes * 60000);
+
+                document.getElementById('resDepartureTime').innerText = formatTime(departureDate);
+                document.getElementById('resPrepStartTime').innerText = formatTime(prepStartDate);
+
+                targetAlarmDate = prepStartDate; // Set target alarm ke waktu mulai persiapan
+            }
+
             document.getElementById('resultPanel').classList.remove('hidden');
 
-            // Generate Link Google Maps Dinamis
             let gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${homeLatLng.lat},${homeLatLng.lng}&destination=${schoolLatLng.lat},${schoolLatLng.lng}`;
             document.getElementById('gmapsBtn').href = gmapsUrl;
 
-            // Buat Garis Rute di Peta
             if (routeLine) map.removeLayer(routeLine);
             routeLine = L.polyline([homeLatLng, schoolLatLng], {
                 color: '#6366f1',
@@ -340,43 +442,105 @@
                 dashArray: '8, 8'
             }).addTo(map);
 
-            // Sesuaikan pandangan peta agar mencakup kedua titik
             map.fitBounds(routeLine.getBounds(), {padding: [50, 50]});
         }
 
-        // Reset Aplikasi
+        function formatTime(dateObj) {
+            let h = String(dateObj.getHours()).padStart(2, '0');
+            let m = String(dateObj.getMinutes()).padStart(2, '0');
+            return `${h}:${m} WIB`;
+        }
+
+        // Fitur Alarm Pengingat (Audio Web API & Browser Notification)
+        function setAlarmTrigger() {
+            if (!targetAlarmDate) {
+                alert('Hitung rute dan jadwal terlebih dahulu!');
+                return;
+            }
+
+            if (Notification && Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+
+            if (alarmInterval) clearInterval(alarmInterval);
+
+            document.getElementById('alarmStatus').classList.remove('hidden');
+            document.getElementById('alarmBtn').innerText = "Alarm Aktif (Menunggu Waktu...)";
+            document.getElementById('alarmBtn').classList.remove('bg-amber-500', 'hover:bg-amber-600');
+            document.getElementById('alarmBtn').classList.add('bg-emerald-600');
+
+            alert('Alarm berhasil diaktifkan! Browser akan membunyikan alarm ketika waktu persiapan tiba.');
+
+            alarmInterval = setInterval(() => {
+                let now = new Date();
+                if (now >= targetAlarmDate) {
+                    clearInterval(alarmInterval);
+                    playAlarmSound();
+                    if (Notification && Notification.permission === "granted") {
+                        new Notification("Waktunya Berangkat Sekolah!", {
+                            body: "Waktu persiapan & perjalanan Anda telah tiba. Ayo bersiap segera!",
+                            icon: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/svgs/solid/school.svg"
+                        });
+                    }
+                    alert('🔔 WAKTU PERSIAPAN BERANGKAT SEKOLAH TELAH TIBA!');
+                    document.getElementById('alarmBtn').innerText = "Alarm Berbunyi!";
+                }
+            }, 1000);
+        }
+
+        // Web Audio API untuk menghasilkan bunyi alarm tanpa file eksternal
+        function playAlarmSound() {
+            try {
+                let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                let oscillator = audioCtx.createOscillator();
+                let gainNode = audioCtx.createGain();
+
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // Frekuensi nada tinggi
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                oscillator.start();
+                setTimeout(() => { oscillator.stop(); }, 2000); // Bunyi selama 2 detik
+            } catch (e) {
+                console.log("Audio API error:", e);
+            }
+        }
+
         function resetAll() {
             if (homeMarker) map.removeLayer(homeMarker);
             if (schoolMarker) map.removeLayer(schoolMarker);
             if (routeLine) map.removeLayer(routeLine);
+            if (alarmInterval) clearInterval(alarmInterval);
 
             homeMarker = null;
             schoolMarker = null;
             routeLine = null;
-            currentStep = 'home';
+            targetAlarmDate = null;
 
-            document.getElementById('homeCoord').innerText = 'Belum dipilih (Klik Peta)';
-            document.getElementById('schoolCoord').innerText = 'Belum dipilih (Klik Peta)';
-            document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Klik pada peta untuk memilih titik <strong>Rumah</strong>';
+            document.getElementById('homeCoord').innerText = 'Belum dipilih';
+            document.getElementById('schoolCoord').innerText = 'Belum dipilih';
+            document.getElementById('searchHomeInput').value = '';
+            document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Tentukan Rumah via GPS/Pencarian, lalu klik titik <strong>Sekolah</strong> di peta';
             document.getElementById('resultPanel').classList.add('hidden');
+            document.getElementById('alarmStatus').classList.add('hidden');
+            document.getElementById('alarmBtn').innerText = "Aktifkan Alarm Pengingat Berangkat";
+            document.getElementById('alarmBtn').classList.remove('bg-emerald-600');
+            document.getElementById('alarmBtn').classList.add('bg-amber-500', 'hover:bg-amber-600');
         }
 
-        // Tutup Tutorial Modal
         function closeTutorial() {
             let modal = document.getElementById('tutorialModal');
             modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
         }
 
-        // Buka Tutorial Modal via tombol Bantuan
         function openTutorial() {
             let modal = document.getElementById('tutorialModal');
             modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
+            setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
         }
     </script>
 </body>
