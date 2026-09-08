@@ -39,17 +39,17 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold text-slate-900">JARAK KESEKOLAH F</h3>
-                    <p class="text-xs text-slate-500">Pembaruan: Tab Menu & Rute Jalur Jalan Asli</p>
+                    <p class="text-xs text-slate-500">Pembaruan: Jadwal Pelajaran Bisa Diedit Sendiri (Senin-Minggu)</p>
                 </div>
             </div>
             <div class="space-y-3 text-sm text-slate-600 mb-6 max-h-[60vh] overflow-y-auto pr-1">
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
-                    <p><strong>Menu Tab Bawah:</strong> Gunakan navigasi tab di bagian bawah layar untuk beralih antara <span class="font-semibold text-indigo-600">Peta & Rute</span>, <span class="font-semibold text-indigo-600">Jadwal & Alarm</span>, dan <span class="font-semibold text-indigo-600">Jadwal Pelajaran</span>.</p>
+                    <p><strong>Edit Jadwal Pelajaran:</strong> Buka tab <span class="font-semibold text-indigo-600">Jadwal Pelajaran</span>, lalu klik tombol <span class="font-semibold text-indigo-600">Edit Jadwal</span> untuk mengubah mata pelajaran dari Senin sampai Minggu sesuai keinginanmu.</p>
                 </div>
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
-                    <p><strong>Rute Mengikuti Jalan:</strong> Garis rute perjalanan kini otomatis mengikuti alur jalur jalan raya asli (tidak lurus kaku lagi).</p>
+                    <p><strong>Penyimpanan Otomatis:</strong> Data jadwal yang kamu ketik akan tersimpan otomatis di perangkatmu.</p>
                 </div>
             </div>
             <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer">
@@ -77,7 +77,7 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER (DIKONTROL OLEH TAB) -->
+    <!-- MAIN CONTENT CONTAINER -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-4">
         
         <!-- ================= TAB 1: PETA & RUTE ================= -->
@@ -190,7 +190,6 @@
                 <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs font-medium text-slate-600 z-20">
                     <span id="mapInstruction"><i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Tentukan Rumah, lalu klik titik <strong>Sekolah</strong> di peta</span>
                     
-                    <!-- Tombol Pilihan Tema Peta -->
                     <div class="flex items-center space-x-1 bg-white p-1 rounded-xl border border-slate-300 shadow-sm">
                         <button onclick="setMapLayer('street')" id="btnLayerStreet" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition cursor-pointer">Jalan</button>
                         <button onclick="setMapLayer('satellite')" id="btnLayerSatellite" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Satelit</button>
@@ -244,76 +243,38 @@
             </div>
         </div>
 
-        <!-- ================= TAB 3: JADWAL PELAJARAN ================= -->
-        <div id="tabContentLessons" class="hidden max-w-3xl mx-auto space-y-4">
+        <!-- ================= TAB 3: JADWAL PELAJARAN (BISA DIEDIT SENIN - MINGGU) ================= -->
+        <div id="tabContentLessons" class="hidden max-w-4xl mx-auto space-y-4">
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center">
-                        <i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jadwal Pelajaran Sekolah
-                    </h2>
-                    <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-semibold">Semester Aktif</span>
+                <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 gap-3">
+                    <div>
+                        <h2 class="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center">
+                            <i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jadwal Pelajaran (Senin - Minggu)
+                        </h2>
+                        <p class="text-xs text-slate-500">Kamu bisa mengetik dan mengubah langsung mata pelajaran di bawah.</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button onclick="resetDefaultLessons()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-xl transition cursor-pointer">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset Default
+                        </button>
+                        <button onclick="saveLessonsData()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-md shadow-indigo-100 cursor-pointer">
+                            <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan Perubahan
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Tabel Jadwal Pelajaran -->
+                <!-- Tabel Jadwal Pelajaran Editable (Senin sampai Minggu) -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-slate-100 text-slate-700">
-                                <th class="p-3 rounded-l-xl">Hari</th>
-                                <th class="p-3">Jam Ke</th>
-                                <th class="p-3 rounded-r-xl">Mata Pelajaran</th>
+                                <th class="p-3 rounded-l-xl w-28">Hari</th>
+                                <th class="p-3 w-36">Jam Pelajaran</th>
+                                <th class="p-3 rounded-r-xl">Mata Pelajaran (Bisa Diedit)</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 text-slate-600">
-                            <tr>
-                                <td class="p-3 font-bold text-slate-800" rowspan="3">Senin</td>
-                                <td class="p-3">07:00 - 08:30</td>
-                                <td class="p-3">Upacara & Pendidikan Agama</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3">08:30 - 10:00</td>
-                                <td class="p-3">Matematika Wajib</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3">10:15 - 11:45</td>
-                                <td class="p-3">Bahasa Indonesia</td>
-                            </tr>
-                            <tr class="bg-slate-50/50">
-                                <td class="p-3 font-bold text-slate-800" rowspan="2">Selasa</td>
-                                <td class="p-3">07:00 - 08:30</td>
-                                <td class="p-3">Bahasa Inggris</td>
-                            </tr>
-                            <tr class="bg-slate-50/50">
-                                <td class="p-3">08:30 - 10:00</td>
-                                <td class="p-3">Ilmu Pengetahuan Alam (IPA)</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-bold text-slate-800" rowspan="2">Rabu</td>
-                                <td class="p-3">07:00 - 08:30</td>
-                                <td class="p-3">Ilmu Pengetahuan Sosial (IPS)</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3">08:30 - 10:00</td>
-                                <td class="p-3">Pendidikan Pancasila & Kewarganegaraan</td>
-                            </tr>
-                            <tr class="bg-slate-50/50">
-                                <td class="p-3 font-bold text-slate-800" rowspan="2">Kamis</td>
-                                <td class="p-3">07:00 - 08:30</td>
-                                <td class="p-3">Informatika / Komputer</td>
-                            </tr>
-                            <tr class="bg-slate-50/50">
-                                <td class="p-3">08:30 - 10:00</td>
-                                <td class="p-3">Seni Budaya</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 font-bold text-slate-800" rowspan="2">Jumat</td>
-                                <td class="p-3">07:00 - 08:30</td>
-                                <td class="p-3">Olahraga & Kesehatan (PJOK)</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3">08:30 - 10:00</td>
-                                <td class="p-3">Mulok / Keterampilan</td>
-                            </tr>
+                        <tbody id="lessonsTableBody" class="divide-y divide-slate-100 text-slate-600">
+                            <!-- Data dimuat lewat JavaScript -->
                         </tbody>
                     </table>
                 </div>
@@ -322,7 +283,7 @@
 
     </main>
 
-    <!-- BOTTOM DASHBOARD NAVIGATION BAR (DASHBOARD BAWAH) -->
+    <!-- BOTTOM DASHBOARD NAVIGATION BAR -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 shadow-lg">
         <div class="max-w-md mx-auto grid grid-cols-3 py-2 px-4">
             <button onclick="switchTab('map')" id="navBtnMap" class="flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer">
@@ -348,6 +309,106 @@
     <!-- Leaflet JS Script -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Data Default Jadwal Senin - Minggu
+        const defaultLessons = [
+            { day: "Senin", time: "07:00 - 08:30", subject: "Upacara & TIK (Informatika)" },
+            { day: "Senin", time: "08:30 - 10:00", subject: "Bahasa Indonesia" },
+            { day: "Senin", time: "10:15 - 11:45", subject: "Bahasa Inggris" },
+            
+            { day: "Selasa", time: "07:00 - 08:30", subject: "Matematika Wajib" },
+            { day: "Selasa", time: "08:30 - 10:00", subject: "Ilmu Pengetahuan Alam (IPA)" },
+
+            { day: "Rabu", time: "07:00 - 08:30", subject: "Ilmu Pengetahuan Sosial (IPS)" },
+            { day: "Rabu", time: "08:30 - 10:00", subject: "Pendidikan Pancasila & Kewarganegaraan" },
+
+            { day: "Kamis", time: "07:00 - 08:30", subject: "PJOK (Olahraga) & Bimbingan Konseling (BK)" },
+            { day: "Kamis", time: "08:30 - 10:00", subject: "Seni Budaya" },
+
+            { day: "Jumat", time: "07:00 - 08:30", subject: "Pendidikan Agama Islam / Keagamaan" },
+            { day: "Jumat", time: "08:30 - 10:00", subject: "Prakarya / Keterampilan" },
+
+            { day: "Sabtu", time: "08:00 - 10:00", subject: "Ekstrakurikuler / Pramuka" },
+            { day: "Minggu", time: "-", subject: "Libur / Belajar Mandiri" }
+        ];
+
+        // Render Tabel Jadwal Pelajaran
+        function renderLessonsTable() {
+            let savedData = localStorage.getItem('jarak_sekolah_lessons_f');
+            let lessons = savedData ? JSON.parse(savedData) : defaultLessons;
+            let tbody = document.getElementById('lessonsTableBody');
+            tbody.innerHTML = '';
+
+            let currentDayGroup = '';
+            let rowSpanCount = 0;
+
+            // Hitung jumlah baris per hari untuk rowspan tabel yang rapi
+            let dayCounts = {};
+            lessons.forEach(item => {
+                dayCounts[item.day] = (dayCounts[item.day] || 0) + 1;
+            });
+
+            let renderedDays = {};
+
+            lessons.forEach((item, index) => {
+                let tr = document.createElement('tr');
+                if (index % 2 === 1) tr.className = "bg-slate-50/50";
+
+                let dayCellHtml = '';
+                if (!renderedDays[item.day]) {
+                    renderedDays[item.day] = true;
+                    dayCellHtml = `<td class="p-3 font-bold text-slate-800 align-middle border-r border-slate-100" rowspan="${dayCounts[item.day]}">${item.day}</td>`;
+                }
+
+                tr.innerHTML = `
+                    ${dayCellHtml}
+                    <td class="p-3">
+                        <input type="text" value="${item.time}" data-index="${index}" class="time-input w-full border border-slate-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-indigo-600 bg-white">
+                    </td>
+                    <td class="p-3">
+                        <input type="text" value="${item.subject}" data-index="${index}" class="subject-input w-full border border-slate-200 rounded-lg px-2 py-1 text-xs focus:outline-none focus:border-indigo-600 bg-white font-medium text-slate-700">
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Simpan Data Jadwal Pelajaran
+        function saveLessonsData() {
+            let timeInputs = document.querySelectorAll('.time-input');
+            let subjectInputs = document.querySelectorAll('.subject-input');
+            let newLessons = [];
+
+            // Ambil urutan hari berdasarkan struktur default
+            let daysList = defaultLessons.map(d => d.day);
+
+            for (let i = 0; i < timeInputs.length; i++) {
+                // Cari hari berdasarkan baris sebelumnya atau tebak dari urutan
+                let assignedDay = defaultLessons[i] ? defaultLessons[i].day : "Lainnya";
+                newLessons.push({
+                    day: assignedDay,
+                    time: timeInputs[i].value,
+                    subject: subjectInputs[i].value
+                });
+            }
+
+            localStorage.setItem('jarak_sekolah_lessons_f', JSON.stringify(newLessons));
+            alert('✅ Jadwal pelajaran berhasil disimpan secara permanen!');
+        }
+
+        // Reset ke Default
+        function resetDefaultLessons() {
+            if (confirm('Kembalikan jadwal pelajaran ke pengaturan awal?')) {
+                localStorage.removeItem('jarak_sekolah_lessons_f');
+                renderLessonsTable();
+                alert('Jadwal dikembalikan ke default.');
+            }
+        }
+
+        // Jalankan render saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            renderLessonsTable();
+        });
+
         // Logika Navigasi Tab Dashboard Bawah
         function switchTab(tabName) {
             document.getElementById('tabContentMap').classList.add('hidden');
@@ -361,7 +422,7 @@
             if (tabName === 'map') {
                 document.getElementById('tabContentMap').classList.remove('hidden');
                 document.getElementById('navBtnMap').className = "flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer font-bold";
-                setTimeout(() => { map.invalidateSize(); }, 200); // Agar peta merender ulang dengan pas
+                setTimeout(() => { map.invalidateSize(); }, 200);
             } else if (tabName === 'schedule') {
                 document.getElementById('tabContentSchedule').classList.remove('hidden');
                 document.getElementById('navBtnSchedule').className = "flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer font-bold";
@@ -509,7 +570,6 @@
             document.getElementById('speedValue').innerText = val + ' km/j';
         }
 
-        // FITUR UTAMA: RUTE MENGIKUTI JALAN RAYA ASLI MENGGUNAKAN OSRM API
         function calculateRoute() {
             if (!homeMarker || !schoolMarker) {
                 alert('Tentukan titik Rumah dan Sekolah terlebih dahulu!');
@@ -521,7 +581,6 @@
             let schoolLat = schoolMarker.getLatLng().lat;
             let schoolLng = schoolMarker.getLatLng().lng;
 
-            // URL OSRM public routing API untuk mencocokkan jalur jalan raya asli
             let osrmUrl = `https://router.project-osrm.org/route/v1/driving/${homeLng},${homeLat};${schoolLng},${schoolLat}?overview=full&geometries=geojson`;
 
             fetch(osrmUrl)
@@ -529,11 +588,10 @@
                 .then(data => {
                     if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
                         let route = data.routes[0];
-                        let distanceMeters = route.distance; // dalam meter
+                        let distanceMeters = route.distance;
                         let distanceKm = distanceMeters / 1000;
                         let distText = distanceKm < 1 ? `${Math.round(distanceMeters)} Meter` : `${distanceKm.toFixed(2)} KM`;
 
-                        // Hitung waktu berdasarkan kecepatan manual pengguna
                         let hours = distanceKm / currentSpeed;
                         calculatedTravelMinutes = Math.round(hours * 60);
                         if (calculatedTravelMinutes < 1) calculatedTravelMinutes = 1;
@@ -547,10 +605,9 @@
                         let gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${homeLat},${homeLng}&destination=${schoolLat},${schoolLng}`;
                         document.getElementById('gmapsBtn').href = gmapsUrl;
 
-                        // Buat Garis Mengikuti Jalur Jalan Asli dari koordinat GeoJSON OSRM
                         if (routeLine) map.removeLayer(routeLine);
                         
-                        let coordsGeo = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // [lat, lng]
+                        let coordsGeo = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
                         routeLine = L.polyline(coordsGeo, {
                             color: '#4f46e5',
                             weight: 5,
@@ -564,12 +621,11 @@
                     }
                 })
                 .catch(err => {
-                    console.log("OSRM Routing error, fallback to straight line:", err);
+                    console.log("OSRM Routing error, fallback:", err);
                     fallbackStraightLine(homeMarker.getLatLng(), schoolMarker.getLatLng());
                 });
         }
 
-        // Fallback jika jaringan/API gagal
         function fallbackStraightLine(homeLatLng, schoolLatLng) {
             let distMeters = homeLatLng.distanceTo(schoolLatLng);
             let distKm = distMeters / 1000;
@@ -641,7 +697,7 @@
             document.getElementById('alarmBtn').classList.remove('bg-amber-500', 'hover:bg-amber-600');
             document.getElementById('alarmBtn').classList.add('bg-emerald-600');
 
-            alert('Alarm berhasil diaktifkan! Alarm akan berbunyi otomatis tepat ketika jam persiapan tiba.');
+            alert('Alarm berhasil diaktifkan!');
 
             alarmInterval = setInterval(() => {
                 let currentTimestamp = new Date().getTime();
