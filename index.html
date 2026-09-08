@@ -834,5 +834,14 @@
             setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
         }
     </script>
+
+    <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log('Service Worker Berhasil Didaftarkan'))
+      .catch((err) => console.log('Gagal Daftar Service Worker', err));
+  }
+</script>
+
 </body>
 </html>
