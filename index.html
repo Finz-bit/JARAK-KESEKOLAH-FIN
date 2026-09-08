@@ -831,10 +831,14 @@
             document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Tentukan Rumah, lalu klik titik <strong>Sekolah</strong> di peta';
         }
 
+            <script>
         function closeTutorial() {
             let modal = document.getElementById('tutorialModal');
             modal.classList.add('opacity-0');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
+            setTimeout(() => { 
+                modal.style.display = 'none'; 
+                triggerWelcomeToast();
+            }, 300);
         }
 
         function openTutorial() {
@@ -842,15 +846,39 @@
             modal.style.display = 'flex';
             setTimeout(() => { modal.classList.remove('opacity-0'); }, 10);
         }
+
+        function triggerWelcomeToast() {
+            const toast = document.getElementById('welcomeToast');
+            if (!toast) return;
+
+            toast.classList.remove('-translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-20', 'opacity-0');
+            }, 3500);
+        }
     </script>
 
     <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('Service Worker Berhasil Didaftarkan'))
-      .catch((err) => console.log('Gagal Daftar Service Worker', err));
-  }
-</script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('Service Worker Berhasil Didaftarkan'))
+          .catch((err) => console.log('Gagal Daftar Service Worker', err));
+      }
+    </script>
+
+    <!-- WELCOME TOAST NOTIFICATION -->
+    <div id="welcomeToast" class="fixed top-5 left-1/2 transform -translate-x-1/2 -translate-y-20 opacity-0 transition-all duration-500 z-50 bg-slate-900/90 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 backdrop-blur-md border border-slate-700 pointer-events-none">
+        <div class="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center text-white shrink-0">
+            <i class="fa-solid fa-hand-wave"></i>
+        </div>
+        <div>
+            <p class="text-xs font-bold">Halo, M. Rizky Dwi A.!</p>
+            <p class="text-[11px] text-slate-300">Aplikasi siap digunakan. Selamat beraktivitas!</p>
+        </div>
+    </div>
 
 </body>
 </html>
