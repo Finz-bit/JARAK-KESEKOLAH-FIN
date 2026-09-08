@@ -35,9 +35,9 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen pb-20">
 
-    <!-- TUTORIAL MODAL (DIPERBAIKI AGAR TIDAK TERTUTUP MENU BAWAH) -->
-<div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-4 md:p-6 shadow-2xl transform transition-all scale-100 flex flex-col max-h-[80vh]">
+    <!-- TUTORIAL MODAL (DI GESER NAIK AGAR TOMBOLNYA BEBAS DIKLIK) -->
+<div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 pb-20 backdrop-blur-sm transition-opacity duration-300">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-4 md:p-6 shadow-2xl transform transition-all scale-100 flex flex-col max-h-[75vh]">
         
         <!-- Header Modal -->
         <div class="flex items-center space-x-3 mb-3 shrink-0">
@@ -97,12 +97,13 @@
             </div>
         </div>
 
-        <!-- Tombol "Saya Mengerti" yang sekarang aman dan bisa diklik -->
-        <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer shrink-0">
+        <!-- Tombol "Saya Mengerti" yang sekarang posisinya naik dan bebas diklik -->
+        <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer shrink-0">
             Saya Mengerti & Mulai Aplikasi <i class="fa-solid fa-arrow-right ml-2"></i>
         </button>
     </div>
 </div>
+
 
 
     <!-- HEADER -->
