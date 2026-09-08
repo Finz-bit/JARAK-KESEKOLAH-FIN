@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARAK KESEKOLAH F</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100%;
+            min-height: 400px;
+            z-index: 10;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- TUTORIAL MODAL -->
+    <div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 md:p-8 shadow-2xl transform transition-all scale-100">
+            <div class="flex items-center space-x-3 mb-4">
+                <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600 text-2xl">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Selamat Datang di JARAK KESEKOLAH F</h3>
+                    <p class="text-xs text-slate-500">Panduan Cepat Penggunaan Aplikasi</p>
+                </div>
+            </div>
+            <div class="space-y-3 text-sm text-slate-600 mb-6">
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
+                    <p><strong>Tentukan Rumah:</strong> Klik sekali pada peta untuk menandai titik lokasi rumah Anda (Marker Biru).</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
+                    <p><strong>Tentukan Sekolah:</strong> Klik kedua kalinya pada peta untuk menandai titik lokasi sekolah (Marker Merah).</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</div>
+                    <p><strong>Pilih Moda & Kecepatan:</strong> Pilih alat transportasi (Jalan kaki, Motor, Mobil) dan sesuaikan kecepatan manual jika diperlukan.</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                    <div class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</div>
+                    <p><strong>Hitung & Navigasi:</strong> Tekan "Hitung Perjalanan" untuk melihat jarak/waktu, atau buka langsung di Google Maps!</p>
+                </div>
+            </div>
+            <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer">
+                Mengerti & Mulai <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-xl shadow-md shadow-indigo-200">
+                    <i class="fa-solid fa-route"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight">JARAK KESEKOLAH F</h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Aplikasi Pengukur Jarak & Estimasi Waktu Tempuh Tugas Sekolah</p>
+                </div>
+            </div>
+            <button onclick="openTutorial()" class="text-slate-500 hover:text-indigo-600 text-sm font-medium flex items-center space-x-1 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition">
+                <i class="fa-solid fa-circle-question"></i>
+                <span class="hidden sm:inline">Bantuan</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        <!-- SIDEBAR KONTROL & HASIL (Kolom 1 & 2 di Desktop) -->
+        <div class="lg:col-span-1 flex flex-col space-y-4">
+            
+            <!-- Panel Titik Lokasi -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
+                    <i class="fa-solid fa-map-pin text-indigo-600 mr-2"></i> Titik Koordinat
+                </h2>
+                <div class="space-y-3 text-xs">
+                    <div class="p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
+                            <span class="font-semibold text-blue-900">Rumah:</span>
+                        </div>
+                        <span id="homeCoord" class="text-slate-600 italic">Belum dipilih (Klik Peta)</span>
+                    </div>
+                    <div class="p-3 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-rose-600 rounded-full"></div>
+                            <span class="font-semibold text-rose-900">Sekolah:</span>
+                        </div>
+                        <span id="schoolCoord" class="text-slate-600 italic">Belum dipilih (Klik Peta)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel Moda & Kecepatan -->
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
+                    <i class="fa-solid fa-gauge-high text-indigo-600 mr-2"></i> Moda & Kecepatan
+                </h2>
+                
+                <!-- Pilihan Moda Transportasi -->
+                <label class="block text-xs font-semibold text-slate-700 mb-2">Pilih Kendaraan:</label>
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <button type="button" onclick="setMode('walk', 4, this)" class="mode-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-person-walking text-lg mb-1"></i>
+                        <span class="text-xs">Jalan Kaki</span>
+                    </button>
+                    <button type="button" onclick="setMode('motor', 35, this)" class="mode-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-motorcycle text-lg mb-1"></i>
+                        <span class="text-xs">Motor</span>
+                    </button>
+                    <button type="button" onclick="setMode('car', 30, this)" class="mode-btn flex flex-col items-center justify-center p-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
+                        <i class="fa-solid fa-car text-lg mb-1"></i>
+                        <span class="text-xs">Mobil</span>
+                    </button>
+                </div>
+
+                <!-- Input Kecepatan Manual -->
+                <div class="mb-2">
+                    <div class="flex justify-between items-center mb-1">
+                        <label for="speedInput" class="text-xs font-semibold text-slate-700">Kecepatan Manual (km/jam):</label>
+                        <span id="speedValue" class="text-xs font-bold text-indigo-600">4 km/j</span>
+                    </div>
+                    <input type="range" id="speedInput" min="1" max="100" value="4" oninput="updateSpeedVal(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Tombol Aksi Utama -->
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="calculateRoute()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-md shadow-indigo-100 flex items-center justify-center space-x-2 text-sm cursor-pointer">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Hitung</span>
+                </button>
+                <button onclick="resetAll()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-4 rounded-xl transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Reset</span>
+                </button>
+            </div>
+
+            <!-- Panel Hasil -->
+            <div id="resultPanel" class="bg-indigo-900 text-white rounded-2xl p-5 shadow-lg hidden">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-3 flex items-center">
+                    <i class="fa-solid fa-chart-line mr-2"></i> Hasil Perhitungan
+                </h2>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                        <span class="text-[10px] text-indigo-200 block uppercase">Jarak Garis Lurus</span>
+                        <span id="resDistance" class="text-lg font-extrabold">-</span>
+                    </div>
+                    <div class="bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                        <span class="text-[10px] text-indigo-200 block uppercase">Estimasi Waktu</span>
+                        <span id="resTime" class="text-lg font-extrabold">-</span>
+                    </div>
+                </div>
+                <!-- Tombol Google Maps -->
+                <a id="gmapsBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-900/30 flex items-center justify-center space-x-2 text-sm">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Buka di Google Maps</span>
+                </a>
+            </div>
+
+        </div>
+
+        <!-- PETA INTERAKTIF (Kolom 2 / Lebar di Desktop) -->
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col relative h-[500px] lg:h-auto">
+            <div class="bg-slate-100 px-4 py-2 border-b border-slate-200 flex items-center justify-between text-xs font-medium text-slate-600">
+                <span id="mapInstruction"><i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Klik pada peta untuk memilih titik <strong>Rumah</strong></span>
+                <span class="text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">Leaflet Maps</span>
+            </div>
+            <div id="map" class="flex-1 w-full"></div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
+        <p>JARAK KESEKOLAH F &copy; 2026 — Dibuat untuk Tugas Sekolah Interaktif</p>
+    </footer>
+
+    <!-- Leaflet JS Script -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inisialisasi Peta (Default pusat di Indonesia/Jakarta atau koordinat umum)
+        let map = L.map('map').setView([-6.200000, 106.816666], 13);
+
+        // Layer Peta Jalan (Street View)
+        let streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Layer Peta Satelit (Satellite View)
+        let satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-eGIS, and the GIS User Community'
+        });
+
+        // Kontrol Layer Peta
+        let baseMaps = {
+            "Peta Jalan": streetLayer,
+            "Peta Satelit": satelliteLayer
+        };
+        L.control.layers(baseMaps).addTo(map);
+
+        // Variabel Status Aplikasi
+        let homeMarker = null;
+        let schoolMarker = null;
+        let routeLine = null;
+        let currentStep = 'home'; // 'home' atau 'school'
+        let currentSpeed = 4; // km/jam default jalan kaki
+
+        // Event Klik Peta
+        map.on('click', function(e) {
+            let lat = e.latlng.lat;
+            let lng = e.latlng.lng;
+
+            if (currentStep === 'home') {
+                if (homeMarker) map.removeLayer(homeMarker);
+                
+                // Custom Ikon Biru untuk Rumah
+                let homeIcon = L.divIcon({
+                    className: 'custom-icon',
+                    html: '<div style="background-color: #2563eb; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"><i class="fa-solid fa-house text-xs"></i></div>',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16]
+                });
+
+                homeMarker = L.marker([lat, lng], {icon: homeIcon}).addTo(map);
+                document.getElementById('homeCoord').innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                
+                currentStep = 'school';
+                document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-rose-600 mr-1"></i> Sekarang klik pada peta untuk memilih titik <strong>Sekolah</strong>';
+            
+            } else if (currentStep === 'school') {
+                if (schoolMarker) map.removeLayer(schoolMarker);
+
+                // Custom Ikon Merah untuk Sekolah
+                let schoolIcon = L.divIcon({
+                    className: 'custom-icon',
+                    html: '<div style="background-color: #e11d48; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; border: 2px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.3);"><i class="fa-solid fa-school text-xs"></i></div>',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16]
+                });
+
+                schoolMarker = L.marker([lat, lng], {icon: schoolIcon}).addTo(map);
+                document.getElementById('schoolCoord').innerText = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                
+                currentStep = 'done';
+                document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-check text-emerald-600 mr-1"></i> Titik selesai! Silakan klik tombol <strong>Hitung</strong>.';
+            }
+        });
+
+        // Fungsi Pilih Moda Transportasi
+        function setMode(mode, defaultSpeed, btnElement) {
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.classList.remove('border-indigo-600', 'bg-indigo-50', 'text-indigo-700');
+                btn.classList.add('border-slate-200', 'bg-white', 'text-slate-600');
+            });
+            btnElement.classList.remove('border-slate-200', 'bg-white', 'text-slate-600');
+            btnElement.classList.add('border-indigo-600', 'bg-indigo-50', 'text-indigo-700');
+
+            currentSpeed = defaultSpeed;
+            document.getElementById('speedInput').value = defaultSpeed;
+            document.getElementById('speedValue').innerText = defaultSpeed + ' km/j';
+        }
+
+        // Update Slider Kecepatan Manual
+        function updateSpeedVal(val) {
+            currentSpeed = parseFloat(val);
+            document.getElementById('speedValue').innerText = val + ' km/j';
+        }
+
+        // Hitung Jarak & Waktu
+        function calculateRoute() {
+            if (!homeMarker || !schoolMarker) {
+                alert('Harap tentukan titik Rumah dan Sekolah terlebih dahulu dengan mengklik pada peta!');
+                return;
+            }
+
+            let homeLatLng = homeMarker.getLatLng();
+            let schoolLatLng = schoolMarker.getLatLng();
+
+            // Hitung jarak garis lurus menggunakan fungsi bawaan Leaflet (dalam meter)
+            let distanceMeters = homeLatLng.distanceTo(schoolLatLng);
+            let distanceKm = distanceMeters / 1000;
+
+            // Format jarak
+            let distText = distanceKm < 1 ? `${Math.round(distanceMeters)} Meter` : `${distanceKm.toFixed(2)} KM`;
+
+            // Hitung Waktu (Jam = Jarak / Kecepatan)
+            let hours = distanceKm / currentSpeed;
+            let totalMinutes = Math.round(hours * 60);
+            let timeText = '';
+            
+            if (totalMinutes < 60) {
+                timeText = `${totalMinutes} Menit`;
+            } else {
+                let h = Math.floor(totalMinutes / 60);
+                let m = totalMinutes % 60;
+                timeText = `${h} Jam ${m} Menit`;
+            }
+
+            // Tampilkan ke Panel Hasil
+            document.getElementById('resDistance').innerText = distText;
+            document.getElementById('resTime').innerText = timeText;
+            document.getElementById('resultPanel').classList.remove('hidden');
+
+            // Generate Link Google Maps Dinamis
+            let gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${homeLatLng.lat},${homeLatLng.lng}&destination=${schoolLatLng.lat},${schoolLatLng.lng}`;
+            document.getElementById('gmapsBtn').href = gmapsUrl;
+
+            // Buat Garis Rute di Peta
+            if (routeLine) map.removeLayer(routeLine);
+            routeLine = L.polyline([homeLatLng, schoolLatLng], {
+                color: '#6366f1',
+                weight: 4,
+                dashArray: '8, 8'
+            }).addTo(map);
+
+            // Sesuaikan pandangan peta agar mencakup kedua titik
+            map.fitBounds(routeLine.getBounds(), {padding: [50, 50]});
+        }
+
+        // Reset Aplikasi
+        function resetAll() {
+            if (homeMarker) map.removeLayer(homeMarker);
+            if (schoolMarker) map.removeLayer(schoolMarker);
+            if (routeLine) map.removeLayer(routeLine);
+
+            homeMarker = null;
+            schoolMarker = null;
+            routeLine = null;
+            currentStep = 'home';
+
+            document.getElementById('homeCoord').innerText = 'Belum dipilih (Klik Peta)';
+            document.getElementById('schoolCoord').innerText = 'Belum dipilih (Klik Peta)';
+            document.getElementById('mapInstruction').innerHTML = '<i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Klik pada peta untuk memilih titik <strong>Rumah</strong>';
+            document.getElementById('resultPanel').classList.add('hidden');
+        }
+
+        // Tutup Tutorial Modal
+        function closeTutorial() {
+            let modal = document.getElementById('tutorialModal');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // Buka Tutorial Modal via tombol Bantuan
+        function openTutorial() {
+            let modal = document.getElementById('tutorialModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+            }, 10);
+        }
+    </script>
+</body>
+</html>
