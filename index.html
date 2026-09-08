@@ -35,7 +35,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen pb-20">
 
-    <!-- TUTORIAL MODAL (DI GESER NAIK AGAR TOMBOLNYA BEBAS DIKLIK) -->
+    <!-- TUTORIAL MODAL -->
 <div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 pb-20 backdrop-blur-sm transition-opacity duration-300">
     <div class="bg-white rounded-2xl max-w-lg w-full p-4 md:p-6 shadow-2xl transform transition-all scale-100 flex flex-col max-h-[75vh]">
         
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <!-- Daftar Langkah-langkah (Bisa di-scroll ke bawah) -->
+        <!-- Daftar Langkah-langkah -->
         <div class="space-y-3 text-xs text-slate-600 mb-4 overflow-y-auto pr-2 flex-1">
             <div class="flex items-start space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
                 <div class="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
@@ -97,14 +97,12 @@
             </div>
         </div>
 
-        <!-- Tombol "Saya Mengerti" yang sekarang posisinya naik dan bebas diklik -->
+        <!-- Tombol "Saya Mengerti" -->
         <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer shrink-0">
             Saya Mengerti & Mulai Aplikasi <i class="fa-solid fa-arrow-right ml-2"></i>
         </button>
     </div>
 </div>
-
-
 
     <!-- HEADER -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
@@ -118,7 +116,7 @@
                     <p class="text-xs text-slate-500 hidden sm:block">MA Zumrotul Wildan - Kelas 11</p>
                 </div>
             </div>
-            <!-- TOMBOL KHUSUS UNTUK CEK TUTORIAL KEMBALI -->
+            <!-- TOMBOL CARA PENGGUNAAN -->
             <button onclick="openTutorial()" class="text-indigo-600 hover:text-indigo-800 text-xs md:text-sm font-bold flex items-center space-x-1.5 bg-indigo-50 hover:bg-indigo-100 px-3.5 py-2 rounded-xl transition cursor-pointer shadow-sm border border-indigo-200">
                 <i class="fa-solid fa-circle-question text-base"></i>
                 <span>Cara Penggunaan</span>
@@ -292,7 +290,7 @@
             </div>
         </div>
 
-        <!-- ================= TAB 3: JADWAL PELAJARAN KELAS 11 (MA ZUMROTUL WILDAN) ================= -->
+        <!-- ================= TAB 3: JADWAL PELAJARAN KELAS 11 ================= -->
         <div id="tabContentLessons" class="hidden max-w-4xl mx-auto space-y-4">
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
                 <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 gap-3">
@@ -312,10 +310,8 @@
                     </div>
                 </div>
 
-                <!-- Daftar Kartu Jadwal Pelajaran (Responsive Mobile-Friendly) -->
-                <div id="lessonsListContainer" class="space-y-4 max-h-[65vh] overflow-y-auto pr-1">
-                    <!-- Dimuat lewat JavaScript -->
-                </div>
+                <!-- Daftar Kartu Jadwal Pelajaran -->
+                <div id="lessonsListContainer" class="space-y-4 max-h-[65vh] overflow-y-auto pr-1"></div>
             </div>
         </div>
 
@@ -340,17 +336,14 @@
     </nav>
 
     <!-- FOOTER -->
-<footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mb-12">
-    <p>Create By : M. Rizky Dwi A. | Support : Gemini AI &amp; GitHub</p>
-</footer>
-
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mb-12">
+        <p>Create By : M. Rizky Dwi A. | Support : Gemini AI &amp; GitHub</p>
+    </footer>
 
     <!-- Leaflet JS Script -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Data Default Jadwal Kelas 11 MA Zumrotul Wildan (Senin - Ahad)
         const defaultLessons = [
-            // SENIN
             { day: "Senin", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
             { day: "Senin", time: "07:15 - 08:45 (Jam 1-2)", subject: "Bahasa Arab" },
             { day: "Senin", time: "08:45 - 09:45 (Jam 3-4)", subject: "Bahasa Inggris" },
@@ -360,7 +353,6 @@
             { day: "Senin", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
             { day: "Senin", time: "12:30 - 13:30 (Jam 10-11)", subject: "Al-Qur'an Hadist" },
 
-            // SELASA
             { day: "Selasa", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
             { day: "Selasa", time: "07:15 - 08:15 (Jam 1)", subject: "Fiqih" },
             { day: "Selasa", time: "08:15 - 09:45 (Jam 2-3)", subject: "Ekonomi" },
@@ -370,7 +362,6 @@
             { day: "Selasa", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
             { day: "Selasa", time: "12:30 - 13:30 (Jam 10-11)", subject: "Bahasa Indonesia" },
 
-            // RABU
             { day: "Rabu", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
             { day: "Rabu", time: "07:15 - 08:45 (Jam 1-2)", subject: "Fisika" },
             { day: "Rabu", time: "08:45 - 09:45 (Jam 3-4)", subject: "Bimbingan Konseling (BK)" },
@@ -380,7 +371,6 @@
             { day: "Rabu", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
             { day: "Rabu", time: "12:30 - 13:30 (Jam 10-11)", subject: "Ekonomi / Keterampilan" },
 
-            // KAMIS
             { day: "Kamis", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
             { day: "Kamis", time: "07:15 - 08:15 (Jam 1)", subject: "Kimia" },
             { day: "Kamis", time: "08:15 - 09:15 (Jam 2)", subject: "Prakarya / Seni Rupa" },
@@ -391,7 +381,6 @@
             { day: "Kamis", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
             { day: "Kamis", time: "12:30 - 13:30 (Jam 10-11)", subject: "Pendidikan Kewarganegaraan (PKN)" },
 
-            // SABTU
             { day: "Sabtu", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
             { day: "Sabtu", time: "07:15 - 08:45 (Jam 1-2)", subject: "PJOK / Olahraga" },
             { day: "Sabtu", time: "08:45 - 09:45 (Jam 3-4)", subject: "Aqidah Akhlak" },
@@ -401,7 +390,6 @@
             { day: "Sabtu", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
             { day: "Sabtu", time: "12:30 - 13:30 (Jam 10-11)", subject: "Ekonomi" },
 
-            // AHAD (MINGGU)
             { day: "Ahad", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
             { day: "Ahad", time: "07:15 - 08:45 (Jam 1-2)", subject: "Sejarah Kebudayaan Islam (SKI)" },
             { day: "Ahad", time: "08:45 - 09:45 (Jam 3-4)", subject: "Administrasi / Pendalaman" },
@@ -412,7 +400,6 @@
             { day: "Ahad", time: "12:30 - 13:30 (Jam 10-11)", subject: "Pendalaman / Kelas Khusus" }
         ];
 
-        // Render Daftar Jadwal Pelajaran (Card Layout Responsive)
         function renderLessonsTable() {
             let savedData = localStorage.getItem('jarak_sekolah_lessons_f_kelas11');
             let lessons = savedData ? JSON.parse(savedData) : defaultLessons;
@@ -457,7 +444,6 @@
             });
         }
 
-        // Simpan Data Jadwal Pelajaran
         function saveLessonsData() {
             let timeInputs = document.querySelectorAll('.time-input');
             let subjectInputs = document.querySelectorAll('.subject-input');
@@ -476,7 +462,6 @@
             alert('✅ Jadwal Kelas 11 berhasil disimpan secara permanen!');
         }
 
-        // Reset ke Default
         function resetDefaultLessons() {
             if (confirm('Kembalikan jadwal pelajaran ke pengaturan awal Kelas 11?')) {
                 localStorage.removeItem('jarak_sekolah_lessons_f_kelas11');
@@ -485,12 +470,10 @@
             }
         }
 
-        // Jalankan render saat halaman dimuat
         window.addEventListener('DOMContentLoaded', () => {
             renderLessonsTable();
         });
 
-        // Logika Navigasi Tab Dashboard Bawah
         function switchTab(tabName) {
             document.getElementById('tabContentMap').classList.add('hidden');
             document.getElementById('tabContentSchedule').classList.add('hidden');
@@ -513,7 +496,6 @@
             }
         }
 
-        // Inisialisasi Peta
         let map = L.map('map').setView([-6.5888, 110.6681], 13);
 
         let streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
@@ -872,13 +854,13 @@
       }
     </script>
 
-    <!-- WELCOME TOAST NOTIFICATION -->
+    <!-- WELCOME TOAST NOTIFICATION (DIUBAH MENJADI HANYA HALLO!) -->
     <div id="welcomeToast" class="fixed top-5 left-1/2 transform -translate-x-1/2 -translate-y-20 opacity-0 transition-all duration-500 z-50 bg-slate-900/90 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-3 backdrop-blur-md border border-slate-700 pointer-events-none">
         <div class="w-8 h-8 bg-indigo-600 rounded-xl flex items-center justify-center text-white shrink-0">
             <i class="fa-solid fa-hand-wave"></i>
         </div>
         <div>
-            <p class="text-xs font-bold">Halo, M. Rizky Dwi A.!</p>
+            <p class="text-xs font-extrabold tracking-wider">HALLO!</p>
             <p class="text-[11px] text-slate-300">Aplikasi siap digunakan. Selamat beraktivitas!</p>
         </div>
     </div>
