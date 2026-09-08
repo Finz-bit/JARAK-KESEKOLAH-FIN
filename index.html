@@ -28,7 +28,7 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen pb-20">
 
     <!-- TUTORIAL MODAL -->
     <div id="tutorialModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
@@ -39,25 +39,17 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold text-slate-900">JARAK KESEKOLAH F</h3>
-                    <p class="text-xs text-slate-500">Panduan Aplikasi & Fitur Pemilihan Peta</p>
+                    <p class="text-xs text-slate-500">Pembaruan: Tab Menu & Rute Jalur Jalan Asli</p>
                 </div>
             </div>
             <div class="space-y-3 text-sm text-slate-600 mb-6 max-h-[60vh] overflow-y-auto pr-1">
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
-                    <p><strong>Titik Rumah:</strong> Cari lokasi rumah menggunakan tombol GPS otomatis, kolom pencarian teks, atau klik langsung di peta.</p>
+                    <p><strong>Menu Tab Bawah:</strong> Gunakan navigasi tab di bagian bawah layar untuk beralih antara <span class="font-semibold text-indigo-600">Peta & Rute</span>, <span class="font-semibold text-indigo-600">Jadwal & Alarm</span>, dan <span class="font-semibold text-indigo-600">Jadwal Pelajaran</span>.</p>
                 </div>
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
-                    <p><strong>Titik Sekolah:</strong> Klik lokasi sekolah pada peta (Marker Merah).</p>
-                </div>
-                <div class="flex items-start space-x-3">
-                    <div class="w-6 h-6 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</div>
-                    <p><strong>Panel Jadwal & Alarm:</strong> Atur jam masuk dan waktu persiapan pada panel khusus jadwal di bawah, lalu aktifkan alarm waktu nyata (Real-time).</p>
-                </div>
-                <div class="flex items-start space-x-3">
-                    <div class="w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</div>
-                    <p><strong>Ganti Tema Peta:</strong> Gunakan tombol pemilih peta di sudut peta (Jalan, Satelit, Dark, Terrain) sesuai kenyamanan Anda.</p>
+                    <p><strong>Rute Mengikuti Jalan:</strong> Garis rute perjalanan kini otomatis mengikuti alur jalur jalan raya asli (tidak lurus kaku lagi).</p>
                 </div>
             </div>
             <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer">
@@ -75,7 +67,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight">JARAK KESEKOLAH F</h1>
-                    <p class="text-xs text-slate-500 hidden sm:block">Aplikasi Rute, Jadwal Alarm & Peta Multi-Tema</p>
+                    <p class="text-xs text-slate-500 hidden sm:block">Aplikasi Rute Jalan Asli & Manajemen Jadwal Sekolah</p>
                 </div>
             </div>
             <button onclick="openTutorial()" class="text-slate-500 hover:text-indigo-600 text-sm font-medium flex items-center space-x-1 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition cursor-pointer">
@@ -85,116 +77,156 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <!-- MAIN CONTENT CONTAINER (DIKONTROL OLEH TAB) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4">
         
-        <!-- SIDEBAR KONTROL & JADWAL (Kolom Kiri) -->
-        <div class="lg:col-span-1 flex flex-col space-y-4">
-            
-            <!-- Panel Pencarian & Titik Lokasi Rumah/Sekolah -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
-                    <i class="fa-solid fa-map-pin text-indigo-600 mr-2"></i> Titik Lokasi
-                </h2>
-                
-                <div class="space-y-3 mb-4">
-                    <label class="block text-xs font-semibold text-slate-700">Cari / Deteksi Lokasi Rumah:</label>
-                    <div class="flex space-x-2">
-                        <input type="text" id="searchHomeInput" placeholder="Cth: Monas, Jakarta..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-600">
-                        <button onclick="searchHomeLocation()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer" title="Cari Lokasi">
-                            <i class="fa-solid fa-search"></i>
+        <!-- ================= TAB 1: PETA & RUTE ================= -->
+        <div id="tabContentMap" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- Sidebar Kontrol Peta -->
+            <div class="lg:col-span-1 flex flex-col space-y-4">
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
+                        <i class="fa-solid fa-map-pin text-indigo-600 mr-2"></i> Titik Lokasi
+                    </h2>
+                    
+                    <div class="space-y-3 mb-4">
+                        <label class="block text-xs font-semibold text-slate-700">Cari / Deteksi Lokasi Rumah:</label>
+                        <div class="flex space-x-2">
+                            <input type="text" id="searchHomeInput" placeholder="Cth: Monas, Jakarta..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-600">
+                            <button onclick="searchHomeLocation()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer" title="Cari Lokasi">
+                                <i class="fa-solid fa-search"></i>
+                            </button>
+                        </div>
+                        <button onclick="detectGPS()" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-location-crosshairs text-blue-600"></i>
+                            <span>Gunakan GPS (Lokasi Saya)</span>
                         </button>
                     </div>
-                    <button onclick="detectGPS()" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-semibold py-2 px-3 rounded-xl text-xs transition flex items-center justify-center space-x-2 cursor-pointer">
-                        <i class="fa-solid fa-location-crosshairs text-blue-600"></i>
-                        <span>Gunakan GPS (Lokasi Saya)</span>
-                    </button>
-                </div>
 
-                <div class="space-y-2 text-xs border-t border-slate-100 pt-3">
-                    <div class="p-2.5 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>
-                            <span class="font-semibold text-blue-900">Rumah:</span>
+                    <div class="space-y-2 text-xs border-t border-slate-100 pt-3">
+                        <div class="p-2.5 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2.5 h-2.5 bg-blue-600 rounded-full"></div>
+                                <span class="font-semibold text-blue-900">Rumah:</span>
+                            </div>
+                            <span id="homeCoord" class="text-slate-600 italic">Belum dipilih</span>
                         </div>
-                        <span id="homeCoord" class="text-slate-600 italic">Belum dipilih</span>
-                    </div>
-                    <div class="p-2.5 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-between">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-2.5 h-2.5 bg-rose-600 rounded-full"></div>
-                            <span class="font-semibold text-rose-900">Sekolah:</span>
+                        <div class="p-2.5 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2.5 h-2.5 bg-rose-600 rounded-full"></div>
+                                <span class="font-semibold text-rose-900">Sekolah:</span>
+                            </div>
+                            <span id="schoolCoord" class="text-slate-600 italic">Belum dipilih</span>
                         </div>
-                        <span id="schoolCoord" class="text-slate-600 italic">Belum dipilih</span>
                     </div>
                 </div>
-            </div>
 
-            <!-- Panel Moda & Kecepatan -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
-                    <i class="fa-solid fa-gauge-high text-indigo-600 mr-2"></i> Moda & Kecepatan
-                </h2>
-                
-                <div class="grid grid-cols-3 gap-2 mb-3">
-                    <button type="button" onclick="setMode('walk', 4, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-person-walking text-base mb-1"></i>
-                        <span class="text-[11px]">Jalan Kaki</span>
-                    </button>
-                    <button type="button" onclick="setMode('motor', 35, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-motorcycle text-base mb-1"></i>
-                        <span class="text-[11px]">Motor</span>
-                    </button>
-                    <button type="button" onclick="setMode('car', 30, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
-                        <i class="fa-solid fa-car text-base mb-1"></i>
-                        <span class="text-[11px]">Mobil</span>
-                    </button>
-                </div>
-
-                <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <label for="speedInput" class="text-xs font-semibold text-slate-700">Kecepatan (km/jam):</label>
-                        <span id="speedValue" class="text-xs font-bold text-indigo-600">4 km/j</span>
+                <!-- Panel Moda & Kecepatan -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3 flex items-center">
+                        <i class="fa-solid fa-gauge-high text-indigo-600 mr-2"></i> Moda & Kecepatan
+                    </h2>
+                    
+                    <div class="grid grid-cols-3 gap-2 mb-3">
+                        <button type="button" onclick="setMode('walk', 4, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 font-semibold transition cursor-pointer">
+                            <i class="fa-solid fa-person-walking text-base mb-1"></i>
+                            <span class="text-[11px]">Jalan Kaki</span>
+                        </button>
+                        <button type="button" onclick="setMode('motor', 35, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
+                            <i class="fa-solid fa-motorcycle text-base mb-1"></i>
+                            <span class="text-[11px]">Motor</span>
+                        </button>
+                        <button type="button" onclick="setMode('car', 30, this)" class="mode-btn flex flex-col items-center justify-center p-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 hover:border-slate-300 font-semibold transition cursor-pointer">
+                            <i class="fa-solid fa-car text-base mb-1"></i>
+                            <span class="text-[11px]">Mobil</span>
+                        </button>
                     </div>
-                    <input type="range" id="speedInput" min="1" max="100" value="4" oninput="updateSpeedVal(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label for="speedInput" class="text-xs font-semibold text-slate-700">Kecepatan (km/jam):</label>
+                            <span id="speedValue" class="text-xs font-bold text-indigo-600">4 km/j</span>
+                        </div>
+                        <input type="range" id="speedInput" min="1" max="100" value="4" oninput="updateSpeedVal(this.value)" class="w-full accent-indigo-600 cursor-pointer">
+                    </div>
+                </div>
+
+                <!-- Tombol Hitung & Reset -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="calculateRoute()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-md shadow-indigo-100 flex items-center justify-center space-x-2 text-sm cursor-pointer">
+                        <i class="fa-solid fa-calculator"></i>
+                        <span>Hitung Rute</span>
+                    </button>
+                    <button onclick="resetAll()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-4 rounded-xl transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+
+                <!-- Panel Hasil Jarak -->
+                <div id="resultPanel" class="bg-indigo-900 text-white rounded-2xl p-5 shadow-lg hidden space-y-3">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center">
+                        <i class="fa-solid fa-chart-line mr-2"></i> Hasil Perjalanan Jalan Raya
+                    </h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
+                            <span class="text-[10px] text-indigo-200 block uppercase">Jarak Jalur</span>
+                            <span id="resDistance" class="text-base font-extrabold">-</span>
+                        </div>
+                        <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
+                            <span class="text-[10px] text-indigo-200 block uppercase">Waktu Tempuh</span>
+                            <span id="resTime" class="text-base font-extrabold">-</span>
+                        </div>
+                    </div>
+                    <a id="gmapsBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 text-sm">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Buka di Google Maps</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- Tombol Hitung & Reset -->
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="calculateRoute()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition shadow-md shadow-indigo-100 flex items-center justify-center space-x-2 text-sm cursor-pointer">
-                    <i class="fa-solid fa-calculator"></i>
-                    <span>Hitung Rute</span>
-                </button>
-                <button onclick="resetAll()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-4 rounded-xl transition flex items-center justify-center space-x-2 text-sm cursor-pointer">
-                    <i class="fa-solid fa-rotate-right"></i>
-                    <span>Reset</span>
-                </button>
+            <!-- Tampilan Peta Interaktif -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col relative h-[500px] lg:h-auto">
+                <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs font-medium text-slate-600 z-20">
+                    <span id="mapInstruction"><i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Tentukan Rumah, lalu klik titik <strong>Sekolah</strong> di peta</span>
+                    
+                    <!-- Tombol Pilihan Tema Peta -->
+                    <div class="flex items-center space-x-1 bg-white p-1 rounded-xl border border-slate-300 shadow-sm">
+                        <button onclick="setMapLayer('street')" id="btnLayerStreet" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition cursor-pointer">Jalan</button>
+                        <button onclick="setMapLayer('satellite')" id="btnLayerSatellite" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Satelit</button>
+                        <button onclick="setMapLayer('dark')" id="btnLayerDark" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Dark</button>
+                        <button onclick="setMapLayer('terrain')" id="btnLayerTerrain" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Terrain</button>
+                    </div>
+                </div>
+                <div id="map" class="flex-1 w-full"></div>
             </div>
+        </div>
 
-            <!-- PANEL KHUSUS JADWAL & ALARM -->
-            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
-                <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center">
-                    <i class="fa-solid fa-clock text-amber-500 mr-2"></i> Pengaturan Jadwal & Alarm
+        <!-- ================= TAB 2: JADWAL & ALARM ================= -->
+        <div id="tabContentSchedule" class="hidden max-w-xl mx-auto space-y-4">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <h2 class="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center">
+                    <i class="fa-solid fa-clock text-amber-500 mr-2"></i> Pengaturan Jadwal & Alarm Keberangkatan
                 </h2>
                 <div class="space-y-3 text-xs">
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Jam Masuk Sekolah:</label>
-                        <input type="time" id="schoolTimeInput" value="07:00" class="w-full border border-slate-300 rounded-xl px-3 py-2 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600">
+                        <input type="time" id="schoolTimeInput" value="07:00" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 text-sm">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">Waktu Persiapan (Mandi, Sarapan, dll):</label>
                         <div class="flex items-center space-x-2">
-                            <input type="number" id="prepTimeInput" value="30" min="0" max="180" class="w-20 border border-slate-300 rounded-xl px-3 py-2 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600">
+                            <input type="number" id="prepTimeInput" value="30" min="0" max="180" class="w-24 border border-slate-300 rounded-xl px-3 py-2.5 font-semibold text-slate-800 focus:outline-none focus:border-indigo-600 text-sm">
                             <span class="text-slate-500 font-medium">Menit</span>
                         </div>
                     </div>
-                    <button onclick="updateScheduleScheduleOnly()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2 px-3 rounded-xl transition cursor-pointer">
+                    <button onclick="updateScheduleScheduleOnly()" class="w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold py-2.5 px-3 rounded-xl transition cursor-pointer">
                         Perbarui Hitungan Jadwal
                     </button>
                 </div>
 
                 <!-- Hasil Jadwal & Tombol Alarm -->
-                <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-xl space-y-2">
+                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl space-y-3">
                     <div class="flex justify-between items-center text-xs">
                         <span class="text-amber-900 font-medium">Waktu Berangkat Ideal:</span>
                         <span id="resDepartureTime" class="font-bold text-amber-800 text-sm">-</span>
@@ -203,75 +235,150 @@
                         <span class="text-amber-900 font-medium">Waktu Mulai Persiapan:</span>
                         <span id="resPrepStartTime" class="font-bold text-emerald-700 text-sm">-</span>
                     </div>
-                    <button onclick="setAlarmTrigger()" id="alarmBtn" class="w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-3 rounded-xl transition text-xs flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
+                    <button onclick="setAlarmTrigger()" id="alarmBtn" class="w-full mt-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-xl transition text-xs flex items-center justify-center space-x-2 cursor-pointer shadow-sm">
                         <i class="fa-solid fa-bell"></i>
                         <span>Aktifkan Alarm Pengingat Persiapan</span>
                     </button>
-                    <p id="alarmStatus" class="text-[10px] text-center text-amber-800 font-semibold italic hidden">Alarm Aktif (Menyesuaikan Jam Asli)...</p>
+                    <p id="alarmStatus" class="text-[11px] text-center text-amber-800 font-semibold italic hidden">Alarm Aktif (Menyesuaikan Jam Asli Sistem)...</p>
                 </div>
             </div>
-
-            <!-- Panel Hasil Jarak -->
-            <div id="resultPanel" class="bg-indigo-900 text-white rounded-2xl p-5 shadow-lg hidden space-y-3">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-indigo-300 flex items-center">
-                    <i class="fa-solid fa-chart-line mr-2"></i> Hasil Perjalanan
-                </h2>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
-                        <span class="text-[10px] text-indigo-200 block uppercase">Jarak</span>
-                        <span id="resDistance" class="text-base font-extrabold">-</span>
-                    </div>
-                    <div class="bg-white/10 p-2.5 rounded-xl backdrop-blur-sm">
-                        <span class="text-[10px] text-indigo-200 block uppercase">Waktu Tempuh</span>
-                        <span id="resTime" class="text-base font-extrabold">-</span>
-                    </div>
-                </div>
-                <a id="gmapsBtn" href="#" target="_blank" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg flex items-center justify-center space-x-2 text-sm">
-                    <i class="fa-solid fa-map-location-dot"></i>
-                    <span>Buka di Google Maps</span>
-                </a>
-            </div>
-
         </div>
 
-        <!-- PETA INTERAKTIF DENGAN TOMBOL PILIHAN TEMA PETA (Kolom Kanan) -->
-        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col relative h-[500px] lg:h-auto">
-            <!-- Header Instruksi & Pemilih Peta Multi-Tema -->
-            <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs font-medium text-slate-600 z-20">
-                <span id="mapInstruction"><i class="fa-solid fa-hand-pointer text-indigo-600 mr-1"></i> Tentukan Rumah, lalu klik titik <strong>Sekolah</strong> di peta</span>
-                
-                <!-- Tombol Pilihan Tema Peta -->
-                <div class="flex items-center space-x-1 bg-white p-1 rounded-xl border border-slate-300 shadow-sm">
-                    <button onclick="setMapLayer('street')" id="btnLayerStreet" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-600 text-white transition cursor-pointer">Jalan</button>
-                    <button onclick="setMapLayer('satellite')" id="btnLayerSatellite" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Satelit</button>
-                    <button onclick="setMapLayer('dark')" id="btnLayerDark" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Dark</button>
-                    <button onclick="setMapLayer('terrain')" id="btnLayerTerrain" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">Terrain</button>
+        <!-- ================= TAB 3: JADWAL PELAJARAN ================= -->
+        <div id="tabContentLessons" class="hidden max-w-3xl mx-auto space-y-4">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h2 class="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jadwal Pelajaran Sekolah
+                    </h2>
+                    <span class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full font-semibold">Semester Aktif</span>
+                </div>
+
+                <!-- Tabel Jadwal Pelajaran -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700">
+                                <th class="p-3 rounded-l-xl">Hari</th>
+                                <th class="p-3">Jam Ke</th>
+                                <th class="p-3 rounded-r-xl">Mata Pelajaran</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-600">
+                            <tr>
+                                <td class="p-3 font-bold text-slate-800" rowspan="3">Senin</td>
+                                <td class="p-3">07:00 - 08:30</td>
+                                <td class="p-3">Upacara & Pendidikan Agama</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">08:30 - 10:00</td>
+                                <td class="p-3">Matematika Wajib</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">10:15 - 11:45</td>
+                                <td class="p-3">Bahasa Indonesia</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="p-3 font-bold text-slate-800" rowspan="2">Selasa</td>
+                                <td class="p-3">07:00 - 08:30</td>
+                                <td class="p-3">Bahasa Inggris</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="p-3">08:30 - 10:00</td>
+                                <td class="p-3">Ilmu Pengetahuan Alam (IPA)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-slate-800" rowspan="2">Rabu</td>
+                                <td class="p-3">07:00 - 08:30</td>
+                                <td class="p-3">Ilmu Pengetahuan Sosial (IPS)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">08:30 - 10:00</td>
+                                <td class="p-3">Pendidikan Pancasila & Kewarganegaraan</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="p-3 font-bold text-slate-800" rowspan="2">Kamis</td>
+                                <td class="p-3">07:00 - 08:30</td>
+                                <td class="p-3">Informatika / Komputer</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="p-3">08:30 - 10:00</td>
+                                <td class="p-3">Seni Budaya</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-slate-800" rowspan="2">Jumat</td>
+                                <td class="p-3">07:00 - 08:30</td>
+                                <td class="p-3">Olahraga & Kesehatan (PJOK)</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3">08:30 - 10:00</td>
+                                <td class="p-3">Mulok / Keterampilan</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            
-            <div id="map" class="flex-1 w-full"></div>
         </div>
 
     </main>
 
+    <!-- BOTTOM DASHBOARD NAVIGATION BAR (DASHBOARD BAWAH) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 shadow-lg">
+        <div class="max-w-md mx-auto grid grid-cols-3 py-2 px-4">
+            <button onclick="switchTab('map')" id="navBtnMap" class="flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer">
+                <i class="fa-solid fa-map text-lg mb-0.5"></i>
+                <span class="text-[11px] font-bold">Peta & Rute</span>
+            </button>
+            <button onclick="switchTab('schedule')" id="navBtnSchedule" class="flex flex-col items-center justify-center py-1 text-slate-400 hover:text-slate-600 transition cursor-pointer">
+                <i class="fa-solid fa-clock text-lg mb-0.5"></i>
+                <span class="text-[11px] font-medium">Jadwal & Alarm</span>
+            </button>
+            <button onclick="switchTab('lessons')" id="navBtnLessons" class="flex flex-col items-center justify-center py-1 text-slate-400 hover:text-slate-600 transition cursor-pointer">
+                <i class="fa-solid fa-book-open text-lg mb-0.5"></i>
+                <span class="text-[11px] font-medium">Jadwal Pelajaran</span>
+            </button>
+        </div>
+    </nav>
+
     <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mb-12">
         <p>JARAK KESEKOLAH F &copy; 2026 — Dibuat untuk Tugas Sekolah Interaktif</p>
     </footer>
 
     <!-- Leaflet JS Script -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Logika Navigasi Tab Dashboard Bawah
+        function switchTab(tabName) {
+            document.getElementById('tabContentMap').classList.add('hidden');
+            document.getElementById('tabContentSchedule').classList.add('hidden');
+            document.getElementById('tabContentLessons').classList.add('hidden');
+
+            document.getElementById('navBtnMap').className = "flex flex-col items-center justify-center py-1 text-slate-400 hover:text-slate-600 transition cursor-pointer";
+            document.getElementById('navBtnSchedule').className = "flex flex-col items-center justify-center py-1 text-slate-400 hover:text-slate-600 transition cursor-pointer";
+            document.getElementById('navBtnLessons').className = "flex flex-col items-center justify-center py-1 text-slate-400 hover:text-slate-600 transition cursor-pointer";
+
+            if (tabName === 'map') {
+                document.getElementById('tabContentMap').classList.remove('hidden');
+                document.getElementById('navBtnMap').className = "flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer font-bold";
+                setTimeout(() => { map.invalidateSize(); }, 200); // Agar peta merender ulang dengan pas
+            } else if (tabName === 'schedule') {
+                document.getElementById('tabContentSchedule').classList.remove('hidden');
+                document.getElementById('navBtnSchedule').className = "flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer font-bold";
+            } else if (tabName === 'lessons') {
+                document.getElementById('tabContentLessons').classList.remove('hidden');
+                document.getElementById('navBtnLessons').className = "flex flex-col items-center justify-center py-1 text-indigo-600 transition cursor-pointer font-bold";
+            }
+        }
+
         // Inisialisasi Peta
         let map = L.map('map').setView([-6.200000, 106.816666], 13);
 
-        // Berbagai Layer Peta
         let streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
         let satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles &copy; Esri' });
         let darkLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 19, attribution: '&copy; CARTO' });
         let terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '&copy; OpenTopoMap' });
 
-        // Set default aktif: Jalan
         streetLayer.addTo(map);
 
         function setMapLayer(type) {
@@ -306,9 +413,8 @@
         let currentSpeed = 4;
         let alarmInterval = null;
         let targetAlarmTimestamp = null;
-        let calculatedTravelMinutes = 15; // Default estimasi awal
+        let calculatedTravelMinutes = 15;
 
-        // Klik Peta
         map.on('click', function(e) {
             let lat = e.latlng.lat;
             let lng = e.latlng.lng;
@@ -403,16 +509,71 @@
             document.getElementById('speedValue').innerText = val + ' km/j';
         }
 
+        // FITUR UTAMA: RUTE MENGIKUTI JALAN RAYA ASLI MENGGUNAKAN OSRM API
         function calculateRoute() {
             if (!homeMarker || !schoolMarker) {
                 alert('Tentukan titik Rumah dan Sekolah terlebih dahulu!');
                 return;
             }
 
-            let distMeters = homeMarker.getLatLng().distanceTo(schoolMarker.getLatLng());
+            let homeLat = homeMarker.getLatLng().lat;
+            let homeLng = homeMarker.getLatLng().lng;
+            let schoolLat = schoolMarker.getLatLng().lat;
+            let schoolLng = schoolMarker.getLatLng().lng;
+
+            // URL OSRM public routing API untuk mencocokkan jalur jalan raya asli
+            let osrmUrl = `https://router.project-osrm.org/route/v1/driving/${homeLng},${homeLat};${schoolLng},${schoolLat}?overview=full&geometries=geojson`;
+
+            fetch(osrmUrl)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
+                        let route = data.routes[0];
+                        let distanceMeters = route.distance; // dalam meter
+                        let distanceKm = distanceMeters / 1000;
+                        let distText = distanceKm < 1 ? `${Math.round(distanceMeters)} Meter` : `${distanceKm.toFixed(2)} KM`;
+
+                        // Hitung waktu berdasarkan kecepatan manual pengguna
+                        let hours = distanceKm / currentSpeed;
+                        calculatedTravelMinutes = Math.round(hours * 60);
+                        if (calculatedTravelMinutes < 1) calculatedTravelMinutes = 1;
+
+                        let timeText = calculatedTravelMinutes < 60 ? `${calculatedTravelMinutes} Menit` : `${Math.floor(calculatedTravelMinutes/60)} Jam ${calculatedTravelMinutes%60} Menit`;
+
+                        document.getElementById('resDistance').innerText = distText;
+                        document.getElementById('resTime').innerText = timeText;
+                        document.getElementById('resultPanel').classList.remove('hidden');
+
+                        let gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${homeLat},${homeLng}&destination=${schoolLat},${schoolLng}`;
+                        document.getElementById('gmapsBtn').href = gmapsUrl;
+
+                        // Buat Garis Mengikuti Jalur Jalan Asli dari koordinat GeoJSON OSRM
+                        if (routeLine) map.removeLayer(routeLine);
+                        
+                        let coordsGeo = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // [lat, lng]
+                        routeLine = L.polyline(coordsGeo, {
+                            color: '#4f46e5',
+                            weight: 5,
+                            opacity: 0.8
+                        }).addTo(map);
+
+                        map.fitBounds(routeLine.getBounds(), {padding: [50, 50]});
+                        updateScheduleCalculation();
+                    } else {
+                        fallbackStraightLine(homeMarker.getLatLng(), schoolMarker.getLatLng());
+                    }
+                })
+                .catch(err => {
+                    console.log("OSRM Routing error, fallback to straight line:", err);
+                    fallbackStraightLine(homeMarker.getLatLng(), schoolMarker.getLatLng());
+                });
+        }
+
+        // Fallback jika jaringan/API gagal
+        function fallbackStraightLine(homeLatLng, schoolLatLng) {
+            let distMeters = homeLatLng.distanceTo(schoolLatLng);
             let distKm = distMeters / 1000;
             let distText = distKm < 1 ? `${Math.round(distMeters)} Meter` : `${distKm.toFixed(2)} KM`;
-
             let hours = distKm / currentSpeed;
             calculatedTravelMinutes = Math.round(hours * 60);
             if (calculatedTravelMinutes < 1) calculatedTravelMinutes = 1;
@@ -423,13 +584,9 @@
             document.getElementById('resTime').innerText = timeText;
             document.getElementById('resultPanel').classList.remove('hidden');
 
-            let gmapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${homeMarker.getLatLng().lat},${homeMarker.getLatLng().lng}&destination=${schoolMarker.getLatLng().lat},${schoolMarker.getLatLng().lng}`;
-            document.getElementById('gmapsBtn').href = gmapsUrl;
-
             if (routeLine) map.removeLayer(routeLine);
-            routeLine = L.polyline([homeMarker.getLatLng(), schoolMarker.getLatLng()], { color: '#6366f1', weight: 4, dashArray: '8, 8' }).addTo(map);
+            routeLine = L.polyline([homeLatLng, schoolLatLng], { color: '#4f46e5', weight: 4, dashArray: '8, 8' }).addTo(map);
             map.fitBounds(routeLine.getBounds(), {padding: [50, 50]});
-
             updateScheduleCalculation();
         }
 
@@ -438,9 +595,8 @@
             alert('Perhitungan jadwal diperbarui!');
         }
 
-        // Kalkulasi Jam Berangkat & Waktu Asli Alarm
         function updateScheduleCalculation() {
-            let schoolTimeStr = document.getElementById('schoolTimeInput').value; // cth "07:00"
+            let schoolTimeStr = document.getElementById('schoolTimeInput').value;
             let prepMinutes = parseInt(document.getElementById('prepTimeInput').value) || 0;
 
             if (!schoolTimeStr) return;
@@ -450,7 +606,6 @@
             let schoolDate = new Date();
             schoolDate.setHours(sHour, sMin, 0, 0);
 
-            // Jika jam sekolah hari ini sudah terlewat, set untuk besok agar alarm tidak langsung keliru
             if (now > schoolDate) {
                 schoolDate.setDate(schoolDate.getDate() + 1);
             }
@@ -461,7 +616,6 @@
             document.getElementById('resDepartureTime').innerText = formatTime(departureDate);
             document.getElementById('resPrepStartTime').innerText = formatTime(prepStartDate);
 
-            // Simpan timestamp target alarm yang akurat berdasarkan jam sistem asli
             targetAlarmTimestamp = prepStartDate.getTime();
         }
 
@@ -471,7 +625,6 @@
             return `${h}:${m} WIB`;
         }
 
-        // Set Alarm Real-Time Sesuai Jam Asli Sistem
         function setAlarmTrigger() {
             if (!targetAlarmTimestamp) {
                 updateScheduleCalculation();
@@ -488,11 +641,10 @@
             document.getElementById('alarmBtn').classList.remove('bg-amber-500', 'hover:bg-amber-600');
             document.getElementById('alarmBtn').classList.add('bg-emerald-600');
 
-            alert('Alarm berhasil diaktifkan! Alarm akan berbunyi otomatis tepat ketika jam persiapan tiba sesuai waktu jam asli sistem perangkat Anda.');
+            alert('Alarm berhasil diaktifkan! Alarm akan berbunyi otomatis tepat ketika jam persiapan tiba.');
 
             alarmInterval = setInterval(() => {
                 let currentTimestamp = new Date().getTime();
-                // Toleransi selisih 1 detik
                 if (currentTimestamp >= targetAlarmTimestamp && currentTimestamp <= targetAlarmTimestamp + 2000) {
                     clearInterval(alarmInterval);
                     playAlarmSound();
