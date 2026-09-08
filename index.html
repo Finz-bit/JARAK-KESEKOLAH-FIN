@@ -39,17 +39,17 @@
                 </div>
                 <div>
                     <h3 class="text-xl font-bold text-slate-900">JARAK KESEKOLAH F</h3>
-                    <p class="text-xs text-slate-500">Pembaruan: Jadwal Pelajaran Bisa Diedit Sendiri (Senin-Minggu)</p>
+                    <p class="text-xs text-slate-500">MA Zumrotul Wildan - Jadwal Kelas 11 (Senin - Ahad)</p>
                 </div>
             </div>
             <div class="space-y-3 text-sm text-slate-600 mb-6 max-h-[60vh] overflow-y-auto pr-1">
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</div>
-                    <p><strong>Edit Jadwal Pelajaran:</strong> Buka tab <span class="font-semibold text-indigo-600">Jadwal Pelajaran</span>, lalu klik tombol <span class="font-semibold text-indigo-600">Edit Jadwal</span> untuk mengubah mata pelajaran dari Senin sampai Minggu sesuai keinginanmu.</p>
+                    <p><strong>Jadwal Kelas 11:</strong> Jadwal pelajaran di tab <span class="font-semibold text-indigo-600">Jadwal Pelajaran</span> sudah otomatis diset sesuai dokumen resmi MA Zumrotul Wildan untuk Kelas 11.</p>
                 </div>
                 <div class="flex items-start space-x-3">
                     <div class="w-6 h-6 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</div>
-                    <p><strong>Penyimpanan Otomatis:</strong> Data jadwal yang kamu ketik akan tersimpan otomatis di perangkatmu.</p>
+                    <p><strong>Bisa Diedit:</strong> Kamu tetap bisa mengubah atau menyesuaikan teks jam dan mata pelajarannya jika sewaktu-waktu ada perubahan.</p>
                 </div>
             </div>
             <button onclick="closeTutorial()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-xl transition-all shadow-lg shadow-indigo-200 cursor-pointer">
@@ -67,7 +67,7 @@
                 </div>
                 <div>
                     <h1 class="text-lg md:text-xl font-extrabold text-slate-900 tracking-tight">JARAK KESEKOLAH F</h1>
-                    <p class="text-xs text-slate-500 hidden sm:block">Aplikasi Rute Jalan Asli & Manajemen Jadwal Sekolah</p>
+                    <p class="text-xs text-slate-500 hidden sm:block">MA Zumrotul Wildan - Kelas 11</p>
                 </div>
             </div>
             <button onclick="openTutorial()" class="text-slate-500 hover:text-indigo-600 text-sm font-medium flex items-center space-x-1 bg-slate-100 hover:bg-indigo-50 px-3 py-2 rounded-lg transition cursor-pointer">
@@ -92,7 +92,7 @@
                     <div class="space-y-3 mb-4">
                         <label class="block text-xs font-semibold text-slate-700">Cari / Deteksi Lokasi Rumah:</label>
                         <div class="flex space-x-2">
-                            <input type="text" id="searchHomeInput" placeholder="Cth: Monas, Jakarta..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-600">
+                            <input type="text" id="searchHomeInput" placeholder="Cth: Jepara, Alamat Rumah..." class="flex-1 text-xs border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-600">
                             <button onclick="searchHomeLocation()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-xl text-xs font-semibold transition cursor-pointer" title="Cari Lokasi">
                                 <i class="fa-solid fa-search"></i>
                             </button>
@@ -114,7 +114,7 @@
                         <div class="p-2.5 bg-rose-50 border border-rose-100 rounded-xl flex items-center justify-between">
                             <div class="flex items-center space-x-2">
                                 <div class="w-2.5 h-2.5 bg-rose-600 rounded-full"></div>
-                                <span class="font-semibold text-rose-900">Sekolah:</span>
+                                <span class="font-semibold text-rose-900">Sekolah (MA Zumrotul Wildan):</span>
                             </div>
                             <span id="schoolCoord" class="text-slate-600 italic">Belum dipilih</span>
                         </div>
@@ -243,15 +243,15 @@
             </div>
         </div>
 
-        <!-- ================= TAB 3: JADWAL PELAJARAN (BISA DIEDIT SENIN - MINGGU) ================= -->
+        <!-- ================= TAB 3: JADWAL PELAJARAN KELAS 11 (MA ZUMROTUL WILDAN) ================= -->
         <div id="tabContentLessons" class="hidden max-w-4xl mx-auto space-y-4">
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
                 <div class="flex flex-wrap items-center justify-between border-b border-slate-100 pb-3 gap-3">
                     <div>
                         <h2 class="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center">
-                            <i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jadwal Pelajaran (Senin - Minggu)
+                            <i class="fa-solid fa-book-open text-indigo-600 mr-2"></i> Jadwal Pelajaran Kelas 11 (MA Zumrotul Wildan)
                         </h2>
-                        <p class="text-xs text-slate-500">Kamu bisa mengetik dan mengubah langsung mata pelajaran di bawah.</p>
+                        <p class="text-xs text-slate-500">Sesuai dokumen resmi tahun ajaran 2026/2027. Bisa diedit secara fleksibel.</p>
                     </div>
                     <div class="flex space-x-2">
                         <button onclick="resetDefaultLessons()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-2 rounded-xl transition cursor-pointer">
@@ -263,14 +263,14 @@
                     </div>
                 </div>
 
-                <!-- Tabel Jadwal Pelajaran Editable (Senin sampai Minggu) -->
+                <!-- Tabel Jadwal Pelajaran Editable (Senin - Ahad) -->
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead>
                             <tr class="bg-slate-100 text-slate-700">
                                 <th class="p-3 rounded-l-xl w-28">Hari</th>
-                                <th class="p-3 w-36">Jam Pelajaran</th>
-                                <th class="p-3 rounded-r-xl">Mata Pelajaran (Bisa Diedit)</th>
+                                <th class="p-3 w-36">Waktu / Jam Ke</th>
+                                <th class="p-3 rounded-r-xl">Mata Pelajaran (Kelas 11)</th>
                             </tr>
                         </thead>
                         <tbody id="lessonsTableBody" class="divide-y divide-slate-100 text-slate-600">
@@ -303,45 +303,83 @@
 
     <!-- FOOTER -->
     <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mb-12">
-        <p>JARAK KESEKOLAH F &copy; 2026 — Dibuat untuk Tugas Sekolah Interaktif</p>
+        <p>JARAK KESEKOLAH F &copy; 2026 — MA Zumrotul Wildan</p>
     </footer>
 
     <!-- Leaflet JS Script -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Data Default Jadwal Senin - Minggu
+        // Data Default Jadwal Kelas 11 MA Zumrotul Wildan (Senin - Ahad)
         const defaultLessons = [
-            { day: "Senin", time: "07:00 - 08:30", subject: "Upacara & TIK (Informatika)" },
-            { day: "Senin", time: "08:30 - 10:00", subject: "Bahasa Indonesia" },
-            { day: "Senin", time: "10:15 - 11:45", subject: "Bahasa Inggris" },
-            
-            { day: "Selasa", time: "07:00 - 08:30", subject: "Matematika Wajib" },
-            { day: "Selasa", time: "08:30 - 10:00", subject: "Ilmu Pengetahuan Alam (IPA)" },
+            // SENIN
+            { day: "Senin", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
+            { day: "Senin", time: "07:15 - 08:45 (Jam 1-2)", subject: "Bahasa Arab" },
+            { day: "Senin", time: "08:45 - 09:45 (Jam 3-4)", subject: "Bahasa Inggris" },
+            { day: "Senin", time: "09:45 - 10:05", subject: "Istirahat" },
+            { day: "Senin", time: "10:05 - 11:35 (Jam 6-7)", subject: "Informatika" },
+            { day: "Senin", time: "11:35 - 12:05 (Jam 8)", subject: "Geografi" },
+            { day: "Senin", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
+            { day: "Senin", time: "12:30 - 13:30 (Jam 10-11)", subject: "Al-Qur'an Hadist" },
 
-            { day: "Rabu", time: "07:00 - 08:30", subject: "Ilmu Pengetahuan Sosial (IPS)" },
-            { day: "Rabu", time: "08:30 - 10:00", subject: "Pendidikan Pancasila & Kewarganegaraan" },
+            // SELASA
+            { day: "Selasa", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
+            { day: "Selasa", time: "07:15 - 08:15 (Jam 1)", subject: "Fiqih" },
+            { day: "Selasa", time: "08:15 - 09:45 (Jam 2-3)", subject: "Ekonomi" },
+            { day: "Selasa", time: "09:45 - 10:05", subject: "Istirahat" },
+            { day: "Selasa", time: "10:05 - 11:05 (Jam 6-7)", subject: "Fikih / Mata Pelajaran Pendukung" },
+            { day: "Selasa", time: "11:05 - 12:05 (Jam 8-9)", subject: "Matematika" },
+            { day: "Selasa", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
+            { day: "Selasa", time: "12:30 - 13:30 (Jam 10-11)", subject: "Bahasa Indonesia" },
 
-            { day: "Kamis", time: "07:00 - 08:30", subject: "PJOK (Olahraga) & Bimbingan Konseling (BK)" },
-            { day: "Kamis", time: "08:30 - 10:00", subject: "Seni Budaya" },
+            // RABU
+            { day: "Rabu", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
+            { day: "Rabu", time: "07:15 - 08:45 (Jam 1-2)", subject: "Fisika" },
+            { day: "Rabu", time: "08:45 - 09:45 (Jam 3-4)", subject: "Bimbingan Konseling (BK)" },
+            { day: "Rabu", time: "09:45 - 10:05", subject: "Istirahat" },
+            { day: "Rabu", time: "10:05 - 11:35 (Jam 6-7)", subject: "Bahasa Inggris" },
+            { day: "Rabu", time: "11:35 - 12:05 (Jam 8)", subject: "Ekonomi" },
+            { day: "Rabu", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
+            { day: "Rabu", time: "12:30 - 13:30 (Jam 10-11)", subject: "Ekonomi / Keterampilan" },
 
-            { day: "Jumat", time: "07:00 - 08:30", subject: "Pendidikan Agama Islam / Keagamaan" },
-            { day: "Jumat", time: "08:30 - 10:00", subject: "Prakarya / Keterampilan" },
+            // KAMIS
+            { day: "Kamis", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
+            { day: "Kamis", time: "07:15 - 08:15 (Jam 1)", subject: "Kimia" },
+            { day: "Kamis", time: "08:15 - 09:15 (Jam 2)", subject: "Prakarya / Seni Rupa" },
+            { day: "Kamis", time: "09:15 - 09:45 (Jam 4-5)", subject: "Geografi" },
+            { day: "Kamis", time: "09:45 - 10:05", subject: "Istirahat" },
+            { day: "Kamis", time: "10:05 - 11:05 (Jam 6-7)", subject: "Penjasorkes / PJOK" },
+            { day: "Kamis", time: "11:05 - 12:05 (Jam 8-9)", subject: "Ekonomi / Keterampilan" },
+            { day: "Kamis", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
+            { day: "Kamis", time: "12:30 - 13:30 (Jam 10-11)", subject: "Pendidikan Kewarganegaraan (PKN)" },
 
-            { day: "Sabtu", time: "08:00 - 10:00", subject: "Ekstrakurikuler / Pramuka" },
-            { day: "Minggu", time: "-", subject: "Libur / Belajar Mandiri" }
+            // SABTU
+            { day: "Sabtu", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
+            { day: "Sabtu", time: "07:15 - 08:45 (Jam 1-2)", subject: "PJOK / Olahraga" },
+            { day: "Sabtu", time: "08:45 - 09:45 (Jam 3-4)", subject: "Aqidah Akhlak" },
+            { day: "Sabtu", time: "09:45 - 10:05", subject: "Istirahat" },
+            { day: "Sabtu", time: "10:05 - 11:05 (Jam 6-7)", subject: "Sosiologi" },
+            { day: "Sabtu", time: "11:05 - 12:05 (Jam 8-9)", subject: "Prakarya" },
+            { day: "Sabtu", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
+            { day: "Sabtu", time: "12:30 - 13:30 (Jam 10-11)", subject: "Ekonomi" },
+
+            // AHAD (MINGGU)
+            { day: "Ahad", time: "07:00 - 07:15 (PRA KBM)", subject: "Asmaul Husna dan Do'a" },
+            { day: "Ahad", time: "07:15 - 08:45 (Jam 1-2)", subject: "Sejarah Kebudayaan Islam (SKI)" },
+            { day: "Ahad", time: "08:45 - 09:45 (Jam 3-4)", subject: "Administrasi / Pendalaman" },
+            { day: "Ahad", time: "09:45 - 10:05", subject: "Istirahat" },
+            { day: "Ahad", time: "10:05 - 11:35 (Jam 6-7)", subject: "Sosiologi" },
+            { day: "Ahad", time: "11:35 - 12:05 (Jam 8)", subject: "Bahasa Inggris" },
+            { day: "Ahad", time: "12:05 - 12:30", subject: "Istirahat & Sholat Dhuhur" },
+            { day: "Ahad", time: "12:30 - 13:30 (Jam 10-11)", subject: "Pendalaman / Kelas Khusus" }
         ];
 
         // Render Tabel Jadwal Pelajaran
         function renderLessonsTable() {
-            let savedData = localStorage.getItem('jarak_sekolah_lessons_f');
+            let savedData = localStorage.getItem('jarak_sekolah_lessons_f_kelas11');
             let lessons = savedData ? JSON.parse(savedData) : defaultLessons;
             let tbody = document.getElementById('lessonsTableBody');
             tbody.innerHTML = '';
 
-            let currentDayGroup = '';
-            let rowSpanCount = 0;
-
-            // Hitung jumlah baris per hari untuk rowspan tabel yang rapi
             let dayCounts = {};
             lessons.forEach(item => {
                 dayCounts[item.day] = (dayCounts[item.day] || 0) + 1;
@@ -378,11 +416,7 @@
             let subjectInputs = document.querySelectorAll('.subject-input');
             let newLessons = [];
 
-            // Ambil urutan hari berdasarkan struktur default
-            let daysList = defaultLessons.map(d => d.day);
-
             for (let i = 0; i < timeInputs.length; i++) {
-                // Cari hari berdasarkan baris sebelumnya atau tebak dari urutan
                 let assignedDay = defaultLessons[i] ? defaultLessons[i].day : "Lainnya";
                 newLessons.push({
                     day: assignedDay,
@@ -391,14 +425,14 @@
                 });
             }
 
-            localStorage.setItem('jarak_sekolah_lessons_f', JSON.stringify(newLessons));
-            alert('✅ Jadwal pelajaran berhasil disimpan secara permanen!');
+            localStorage.setItem('jarak_sekolah_lessons_f_kelas11', JSON.stringify(newLessons));
+            alert('✅ Jadwal Kelas 11 berhasil disimpan secara permanen!');
         }
 
         // Reset ke Default
         function resetDefaultLessons() {
-            if (confirm('Kembalikan jadwal pelajaran ke pengaturan awal?')) {
-                localStorage.removeItem('jarak_sekolah_lessons_f');
+            if (confirm('Kembalikan jadwal pelajaran ke pengaturan awal Kelas 11?')) {
+                localStorage.removeItem('jarak_sekolah_lessons_f_kelas11');
                 renderLessonsTable();
                 alert('Jadwal dikembalikan ke default.');
             }
@@ -433,7 +467,7 @@
         }
 
         // Inisialisasi Peta
-        let map = L.map('map').setView([-6.200000, 106.816666], 13);
+        let map = L.map('map').setView([-6.5888, 110.6681], 13); // Koordinat sekitar Jepara
 
         let streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
         let satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles &copy; Esri' });
